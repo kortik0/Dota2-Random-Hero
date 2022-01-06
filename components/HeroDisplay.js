@@ -13,15 +13,16 @@ import { Text } from "./Text"
 
 const gridGenerator = (ability) => {
   return (
-    <Grid container item spacing={2} sm={4}>
+    <Grid container item sm={4} height={"100%"}>
       {ability.map((hero) => (
         <Grid item direction={"column"}>
           <img
             key={hero.name}
             style={{
-              width: "80px",
-              height: "80px",
-              objectFit: "cover",
+              width: "110px",
+              height: "85px",
+              marginLeft: "15px",
+              objectFit: "scale-down",
             }}
             src={getHeroName(hero.name)}
           />
