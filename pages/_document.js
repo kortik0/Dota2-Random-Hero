@@ -5,6 +5,7 @@ export default class ThisAppDocument extends Document {
       <Html>
         <Head>
           <title>Hero Randomer</title>
+          <meta name={"description"} />
           <link
             href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
             rel="stylesheet"
