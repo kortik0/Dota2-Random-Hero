@@ -25,3 +25,7 @@ a {
 img:hover {
   outline: 2px solid #f1faee;
 }
+
+.randomed > img {
+  outline: 5px solid #e63946;
+}
