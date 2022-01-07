@@ -5,17 +5,15 @@ import { getRandomNumber } from "../utility/getRandomNumber"
 export default function RandomPaper({ data, setRandomed, randomed }) {
   const clickHandler = () => {
     const id = getRandomNumber(data.length)
-    setRandomed(data[id].localized_name)
-    console.log(randomed)
-    // setRandomed({
-    //   name: data[id].localized_name,
-    //   attackType: data[id].attack_type,
-    //   roles: data[id].roles,
-    //   id,
-    // })
-    // console.log(
-    //   `Hi. This is Random Paper. Your hero data is ${randomed.name}, with type ${randomed.attackType} and with many roles ${randomed.roles}`
-    // )
+    setRandomed({
+      name: data[id].localized_name,
+      attackType: data[id].attack_type,
+      roles: data[id].roles,
+      id,
+    })
+    console.log(
+      `Your hero data is ${randomed.name}, with type ${randomed.attackType} and with many roles ${randomed.roles}`
+    )
   }
 
   return (
@@ -42,7 +40,7 @@ export default function RandomPaper({ data, setRandomed, randomed }) {
         Random
       </Button>
       {Object.keys(randomed).length ? (
-        <Text>Your heroes for this time is: {randomed}</Text>
+        <Text>Your heroes for this time is: {randomed.name}</Text>
       ) : null}
     </Paper>
   )
