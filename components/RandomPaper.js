@@ -1,15 +1,21 @@
-import { Button, Container, Paper } from "@mui/material"
+import { Button, Paper } from "@mui/material"
 import { Text } from "./Text"
 import { getRandomNumber } from "../utility/getRandomNumber"
-import { useState } from "react"
 
-export default function RandomPaper({ data }) {
-  const [randomed, setRandomed] = useState("")
-
+export default function RandomPaper({ data, setRandomed, randomed }) {
   const clickHandler = () => {
     const id = getRandomNumber(data.length)
     setRandomed(data[id].localized_name)
-    console.log("Your hero is " + data[id].localized_name + " with id: " + id)
+    console.log(randomed)
+    // setRandomed({
+    //   name: data[id].localized_name,
+    //   attackType: data[id].attack_type,
+    //   roles: data[id].roles,
+    //   id,
+    // })
+    // console.log(
+    //   `Hi. This is Random Paper. Your hero data is ${randomed.name}, with type ${randomed.attackType} and with many roles ${randomed.roles}`
+    // )
   }
 
   return (
@@ -35,7 +41,7 @@ export default function RandomPaper({ data }) {
       >
         Random
       </Button>
-      {randomed.length ? (
+      {Object.keys(randomed).length ? (
         <Text>Your heroes for this time is: {randomed}</Text>
       ) : null}
     </Paper>

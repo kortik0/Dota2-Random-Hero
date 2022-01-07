@@ -15,3 +15,13 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.Image :hover{
+  cursor: pointer;
+  filter: grayscale(50%);
+
+}
+
+img:hover {
+  outline: 2px solid #f1faee;
+}

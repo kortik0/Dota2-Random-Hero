@@ -1,16 +1,18 @@
-import { Header } from "../components/Header"
+// import { Header } from "../components/Header"
 import { Box } from "@mui/material"
 import RandomPaper from "../components/RandomPaper"
 import HeroDisplay from "../components/HeroDisplay"
+import { useState } from "react"
 
 export default function index({ data }) {
+  const [randomed, setHero] = useState([])
+
   return (
     <Box>
       {/*<Header />*/}
-      <br />
       <>
-        <RandomPaper data={data} />
-        <HeroDisplay data={data} />
+        <RandomPaper data={data} setRandomed={setHero} randomed={randomed} />
+        <HeroDisplay data={data} randomed={randomed} />
       </>
     </Box>
   )
