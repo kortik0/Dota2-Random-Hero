@@ -29,3 +29,17 @@ img:hover {
 .randomed > img {
   outline: 5px solid #ffffff;
 }
+
+.MuiCheckbox-root {
+  display: none;
+  opacity: 0;
+}
+
+.css-j204z7-MuiFormControlLabel-root{
+  margin-left: 0!important;
+  margin-right: 0!important;
+}
+
+.Selected {
+  background: #1d3557;
+}

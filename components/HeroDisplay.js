@@ -23,7 +23,7 @@ const gridGenerator = (heroes, ability, id) => {
                 alt={hero.name}
                 style={{
                   width: "110px",
-                  height: "85px",
+                  height: "77px", //85px //Need advice
                   marginLeft: "15px",
                   objectFit: "cover",
                 }}

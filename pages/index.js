@@ -1,5 +1,5 @@
 // import { Header } from "../components/Header"
-import { Box } from "@mui/material"
+import { Box, Divider } from "@mui/material"
 import RandomPaper from "../components/RandomPaper"
 import HeroDisplay from "../components/HeroDisplay"
 import { useState } from "react"
@@ -12,6 +12,7 @@ export default function index({ data }) {
       {/*<Header />*/}
       <>
         <RandomPaper data={data} setRandomed={setHero} randomed={randomed} />
+        <br />
         <HeroDisplay data={data} randomed={randomed} />
       </>
     </Box>
