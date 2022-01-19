@@ -1,8 +1,8 @@
 import { Box, Button, Container, Paper } from "@mui/material"
 import { Text } from "./Text"
 import { getRandomNumber } from "../utility/getRandomNumber"
-import { Modal } from "./Modal"
-import { useEffect, useState } from "react"
+import { ModalWindow } from "./Modal/Modal"
+import { useState } from "react"
 
 export default function RandomPaper({ data, setRandomed, randomed }) {
   const [isOpen, stateOpen] = useState(false)
@@ -55,7 +55,7 @@ export default function RandomPaper({ data, setRandomed, randomed }) {
           >
             Advanced options
           </Button>
-          <Modal isOpen={isOpen} toClose={dialogClickHandler} />
+          <ModalWindow isOpen={isOpen} toClose={dialogClickHandler} />
         </Box>
         {Object.keys(randomed).length ? (
           <Text>Your heroes for this time is: {randomed.name}</Text>

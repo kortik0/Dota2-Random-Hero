@@ -43,3 +43,7 @@ img:hover {
 .Selected {
   background: #1d3557;
 }
+
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+  max-width: 855px;
+}
