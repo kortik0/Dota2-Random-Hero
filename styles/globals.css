@@ -20,14 +20,16 @@ a {
   cursor: pointer;
   filter: grayscale(50%);
 
+  outline: 2px solid #f1faee;
+
 }
 
 img:hover {
   outline: 2px solid #f1faee;
 }
 
-.randomed > img {
-  outline: 5px solid #ffffff;
+.randomed > span {
+  outline: 4px solid #ffffff;
 }
 
 .MuiCheckbox-root {

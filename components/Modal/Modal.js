@@ -30,9 +30,17 @@ function DialogContentGenerator({
   const attack_type = ["Melee", "Range"]
 
   const selectClickHandler = (data, attachedSection) => {
+    console.log(
+      currentSelected[attachedSection].includes(data)
+        ? currentSelected[attachedSection].filter((element) => element !== data)
+        : [data]
+    )
+
     clickHandler({
       ...currentSelected,
-      [attachedSection]: [...currentSelected[attachedSection], data],
+      [attachedSection]: currentSelected[attachedSection].includes(data)
+        ? currentSelected[attachedSection].filter((element) => element !== data)
+        : [data],
     })
   }
 

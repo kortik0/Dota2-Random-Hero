@@ -4,7 +4,7 @@ import RandomPaper from "../components/RandomPaper"
 import HeroDisplay from "../components/HeroDisplay"
 import { useState } from "react"
 
-export default function index({ data }) {
+export default function Index({ data }) {
   const [randomed, setHero] = useState([])
 
   return (
@@ -26,6 +26,7 @@ export async function getStaticProps() {
   return {
     props: {
       data,
+      fallback: false,
     },
   }
 }
