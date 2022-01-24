@@ -1,22 +1,19 @@
 import {
-  Button,
-  ButtonGroup,
+  Box,
   Dialog,
   DialogContent,
-  DialogContentText,
   DialogTitle,
+  FormControlLabel,
+  Switch,
 } from "@mui/material"
+import { Button } from "../Button/Button"
+import { DialogContentWorker } from "./DialogContentWorker"
 import { useEffect, useState } from "react"
-import { SelectButton } from "./SelectButton"
 
-function DialogContentGenerator({
-  clickHandler,
-  currentSelected,
-  currentContent,
-}) {
-  //V0.5 = attributes, roles, attack_type
-  const attributes = ["Strength", "Agility", "Intelligence"]
-  const roles = [
+export const ModalWindow = ({ isOpen, toClose, data }) => {
+  /*THIS IS PROBABLY TEST*/
+  const initialAttribute = ["str", "agi", "int"]
+  const initialRole = [
     "Carry",
     "Escape",
     "Nuker",
@@ -27,69 +24,11 @@ function DialogContentGenerator({
     "Support",
     "Pusher",
   ]
-  const attack_type = ["Melee", "Range"]
+  const initialAttackType = ["Melee", "Ranged"]
+  /*THIS IS PROBABLY TEST*/
 
-  const selectClickHandler = (data, attachedSection) => {
-    console.log(
-      currentSelected[attachedSection].includes(data)
-        ? currentSelected[attachedSection].filter((element) => element !== data)
-        : [data]
-    )
-
-    clickHandler({
-      ...currentSelected,
-      [attachedSection]: currentSelected[attachedSection].includes(data)
-        ? currentSelected[attachedSection].filter((element) => element !== data)
-        : [data],
-    })
-  }
-
-  return (
-    <>
-      <DialogContentText key={`${currentContent}_Modal_Content`}>
-        {currentContent}
-      </DialogContentText>
-      <ButtonGroup
-        key={`${currentContent}_Button_Group`}
-        variant="outlined"
-        aria-label="outlined primary button group"
-      >
-        {currentContent === "Attributes" &&
-          attributes.map((attribute) => (
-            <SelectButton
-              key={`${attribute}_${currentContent}_button`}
-              selectedData={currentSelected}
-              clickHandler={selectClickHandler}
-              data={attribute}
-              attached={"attributes"}
-            />
-          ))}
-        {currentContent === "Roles" &&
-          roles.map((role) => (
-            <SelectButton
-              key={`${role}_${currentContent}_button`}
-              selectedData={currentSelected}
-              clickHandler={selectClickHandler}
-              data={role}
-              attached={"roles"}
-            />
-          ))}
-        {currentContent === "Attack type" &&
-          attack_type.map((type) => (
-            <SelectButton
-              key={`${type}_${currentContent}_button`}
-              selectedData={currentSelected}
-              clickHandler={selectClickHandler}
-              data={type}
-              attached={"attackType"}
-            />
-          ))}
-      </ButtonGroup>
-    </>
-  )
-}
-
-export const ModalWindow = ({ isOpen, toClose }) => {
+  //V0.5 - is needed
+  const [isNeed, changeIsNeed] = useState(false)
   const [selected, setSelected] = useState({
     attributes: [],
     roles: [],
@@ -98,22 +37,61 @@ export const ModalWindow = ({ isOpen, toClose }) => {
 
   const modalContent = ["Attributes", "Roles", "Attack type"]
 
+  const changeHandler = () => {
+    changeIsNeed(!isNeed)
+  }
+
+  const clickHandler = () => {
+    const [{ attributes, roles, attackType }] = [selected]
+
+    const filterAttributes = attributes.length ? attributes : initialAttribute
+    const filterAttackType = attackType.length ? attackType : initialAttackType
+    const filterRoles = roles.length ? roles : initialRole
+
+    //TODO: Think about how to set and get randomed data
+
+    console.log(
+      data.filter(
+        (hero) =>
+          filterAttributes.some((attr) => hero.primary_attr === attr) &&
+          filterAttackType.some((type) => hero.attack_type === type) &&
+          filterRoles.some((role) => hero.roles.includes(role))
+      )
+    )
+  }
+
   useEffect(() => {
     console.log(selected)
   }, [selected])
 
   return (
     <Dialog open={isOpen} onClose={toClose}>
-      <DialogTitle>Advanced options</DialogTitle>
+      <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
+        <DialogTitle>Advanced options</DialogTitle>
+        <FormControlLabel
+          value="Allow you to select several options"
+          control={<Switch color="primary" onChange={changeHandler} />}
+          label="Allow you to select several options"
+          labelPlacement="end"
+        />
+      </Box>
       <DialogContent>
         {modalContent.map((content) => (
-          <DialogContentGenerator
+          <DialogContentWorker
             key={content}
             clickHandler={setSelected}
             currentSelected={selected}
             currentContent={content}
+            isNeed={isNeed}
           />
         ))}
+        <br />
+        <Button
+          action={clickHandler}
+          styles={{ width: "165px", marginTop: "15px" }}
+        >
+          Random with this params
+        </Button>
       </DialogContent>
     </Dialog>
   )

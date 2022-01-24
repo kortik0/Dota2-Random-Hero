@@ -1,8 +1,9 @@
-import { Box, Button, Container, Paper } from "@mui/material"
+import { Box, Container, Paper } from "@mui/material"
 import { Text } from "./Text"
-import { getRandomNumber } from "../utility/getRandomNumber"
 import { ModalWindow } from "./Modal/Modal"
 import { useState } from "react"
+import { Button } from "./Button/Button"
+import { getRandomNumber } from "../utility/getRandomNumber"
 
 export default function RandomPaper({ data, setRandomed, randomed }) {
   const [isOpen, stateOpen] = useState(false)
@@ -38,24 +39,13 @@ export default function RandomPaper({ data, setRandomed, randomed }) {
           Select the items that you want to find the character you want:
         </Text>
         <Box>
-          <Button
-            onClick={clickHandler}
-            variant={"outlined"}
-            color={"btnColor"}
-            disableElevation
-            style={{ marginRight: "20px" }}
-          >
-            Random
-          </Button>
-          <Button
-            onClick={dialogClickHandler}
-            variant={"outlined"}
-            color={"btnColor"}
-            disableElevation
-          >
-            Advanced options
-          </Button>
-          <ModalWindow isOpen={isOpen} toClose={dialogClickHandler} />
+          <Button action={clickHandler}>Random</Button>
+          <Button action={dialogClickHandler}>Advanced options</Button>
+          <ModalWindow
+            isOpen={isOpen}
+            toClose={dialogClickHandler}
+            data={data}
+          />
         </Box>
         {Object.keys(randomed).length ? (
           <Text>Your heroes for this time is: {randomed.name}</Text>

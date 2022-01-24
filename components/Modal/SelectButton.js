@@ -5,17 +5,18 @@ export const SelectButton = ({
   selectedData,
   clickHandler,
   data,
+  value,
   style,
   attached,
 }) => {
   return (
     <Button
       className={clsx({
-        Selected: selectedData[attached]?.includes(data),
+        Selected: selectedData[attached]?.includes(value),
       })}
-      onClick={(e) => clickHandler(data, e.target.name)}
+      onClick={(e) => clickHandler(value, e.target.name)}
       style={style}
-      value={data}
+      value={value}
       name={attached}
     >
       {data}

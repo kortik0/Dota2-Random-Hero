@@ -1,5 +1,5 @@
 // import { Header } from "../components/Header"
-import { Box, Divider } from "@mui/material"
+import { Box } from "@mui/material"
 import RandomPaper from "../components/RandomPaper"
 import HeroDisplay from "../components/HeroDisplay"
 import { useState } from "react"
@@ -20,7 +20,7 @@ export default function Index({ data }) {
 }
 
 export async function getStaticProps() {
-  const response = await fetch("http://localhost:3000/api/")
+  const response = await fetch("https://api.opendota.com/api/heroes")
   const data = await response.json()
 
   return {
