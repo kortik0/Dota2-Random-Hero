@@ -6,26 +6,16 @@ import {
   FormControlLabel,
   Switch,
 } from "@mui/material"
+import { useEffect, useState } from "react"
 import { Button } from "../Button/Button"
 import { DialogContentWorker } from "./DialogContentWorker"
-import { useEffect, useState } from "react"
+import jsonData from "./ModalData/advancedData.json"
+import { getRandomNumber } from "../../utility/getRandomNumber"
 
-export const ModalWindow = ({ isOpen, toClose, data }) => {
-  /*THIS IS PROBABLY TEST*/
-  const initialAttribute = ["str", "agi", "int"]
-  const initialRole = [
-    "Carry",
-    "Escape",
-    "Nuker",
-    "Initiator",
-    "Durable",
-    "Disabler",
-    "Jungler",
-    "Support",
-    "Pusher",
-  ]
-  const initialAttackType = ["Melee", "Ranged"]
-  /*THIS IS PROBABLY TEST*/
+export const ModalWindow = ({ isOpen, toClose, setRandom, data }) => {
+  const { initialAttributes, initialAttackTypes, initialRoles } = {
+    ...jsonData,
+  }
 
   //V0.5 - is needed
   const [isNeed, changeIsNeed] = useState(false)
@@ -44,11 +34,27 @@ export const ModalWindow = ({ isOpen, toClose, data }) => {
   const clickHandler = () => {
     const [{ attributes, roles, attackType }] = [selected]
 
-    const filterAttributes = attributes.length ? attributes : initialAttribute
-    const filterAttackType = attackType.length ? attackType : initialAttackType
-    const filterRoles = roles.length ? roles : initialRole
+    const filterAttributes = attributes.length ? attributes : initialAttributes
+    const filterAttackType = attackType.length ? attackType : initialAttackTypes
+    const filterRoles = roles.length ? roles : initialRoles
 
-    //TODO: Think about how to set and get randomed data
+    const filteredHero = data.filter(
+      (hero) =>
+        filterAttributes.some((attr) => hero.primary_attr === attr) &&
+        filterAttackType.some((type) => hero.attack_type === type) &&
+        filterRoles.some((role) => hero.roles.includes(role))
+    )
+
+    const id = getRandomNumber(filteredHero.length)
+
+    setRandom({
+      name: filteredHero[id].localized_name,
+      attackType: filteredHero[id].attack_type,
+      roles: filteredHero[id].roles,
+      id: filteredHero[id].id,
+    })
+
+    toClose()
 
     console.log(
       data.filter(

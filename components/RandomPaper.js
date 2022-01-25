@@ -42,8 +42,10 @@ export default function RandomPaper({ data, setRandomed, randomed }) {
           <Button action={clickHandler}>Random</Button>
           <Button action={dialogClickHandler}>Advanced options</Button>
           <ModalWindow
+            className={"advancedDialog"}
             isOpen={isOpen}
             toClose={dialogClickHandler}
+            setRandom={setRandomed}
             data={data}
           />
         </Box>

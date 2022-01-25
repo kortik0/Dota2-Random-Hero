@@ -37,17 +37,17 @@ img:hover {
   opacity: 0;
 }
 
-.css-j204z7-MuiFormControlLabel-root{
+.css-j204z7-MuiFormControlLabel-root{ /*I don't know from where I take this. All looks similar so...*/
   margin-left: 0!important;
   margin-right: 0!important;
 }
 
 .Selected {
-  background: #1d3557;
+  background: #1d3557!important;
 }
 
-.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
-  max-width: 855px;
+.MuiDialog-paperWidthSm {
+  max-width: 855px!important;
 }
 
 

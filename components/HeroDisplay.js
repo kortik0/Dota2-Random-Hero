@@ -54,7 +54,9 @@ export default function HeroDisplay({ data, randomed }) {
     `Hi. This is Hero Block. Your hero data is ${randomed.name}, with type ${randomed.attackType} and with many roles ${randomed.roles}. ID: ${randomed.id}`
   )
 
-  const randomedHeroID = data.filter((_, index) => index === randomed.id)[0]?.id
+  const randomedHeroID = data.filter(
+    (hero) => hero.localized_name === randomed.name
+  )[0]?.id
 
   console.log(randomedHeroID)
 

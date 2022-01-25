@@ -1,5 +1,6 @@
 import { ButtonGroup, DialogContentText } from "@mui/material"
 import { SelectButton } from "./SelectButton"
+import data from "./ModalData/advancedData.json"
 
 export const DialogContentWorker = ({
   clickHandler,
@@ -7,25 +8,14 @@ export const DialogContentWorker = ({
   currentContent,
   isNeed,
 }) => {
-  //V0.5 = attributes, roles, attack_type
-  const attributes = ["Strength", "Agility", "Intelligence"]
-  const attributeShorthand = ["str", "agi", "int"]
-  const roles = [
-    "Carry",
-    "Escape",
-    "Nuker",
-    "Initiator",
-    "Durable",
-    "Disabler",
-    "Jungler",
-    "Support",
-    "Pusher",
-  ]
-  const attack_type = ["Melee", "Ranged"]
+  const {
+    initialAttributes,
+    initialAttackTypes,
+    initialRoles,
+    initialShorthandAttributes,
+  } = { ...data }
 
   const selectClickHandler = (value, attachedSection) => {
-    console.log(value)
-
     clickHandler({
       ...currentSelected,
       [attachedSection]: currentSelected[attachedSection].includes(value)
@@ -49,35 +39,35 @@ export const DialogContentWorker = ({
         aria-label="outlined primary button group"
       >
         {currentContent === "Attributes" &&
-          attributes.map((attribute, index) => (
+          initialAttributes.map((attribute, index) => (
             <SelectButton
               key={`${attribute}_${currentContent}_button`}
               selectedData={currentSelected}
               clickHandler={selectClickHandler}
               data={attribute}
-              value={attributeShorthand[index]}
+              value={initialShorthandAttributes[index]}
               attached={"attributes"}
             />
           ))}
         {currentContent === "Roles" &&
-          roles.map((role, index) => (
+          initialRoles.map((role, index) => (
             <SelectButton
               key={`${role}_${currentContent}_button`}
               selectedData={currentSelected}
               clickHandler={selectClickHandler}
               data={role}
-              value={roles[index]}
+              value={initialRoles[index]}
               attached={"roles"}
             />
           ))}
         {currentContent === "Attack type" &&
-          attack_type.map((type, index) => (
+          initialAttackTypes.map((type, index) => (
             <SelectButton
               key={`${type}_${currentContent}_button`}
               selectedData={currentSelected}
               clickHandler={selectClickHandler}
               data={type}
-              value={attack_type[index]}
+              value={initialAttackTypes[index]}
               attached={"attackType"}
             />
           ))}

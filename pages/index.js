@@ -2,10 +2,12 @@
 import { Box } from "@mui/material"
 import RandomPaper from "../components/RandomPaper"
 import HeroDisplay from "../components/HeroDisplay"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function Index({ data }) {
   const [randomed, setHero] = useState([])
+
+  useEffect(() => console.log(randomed))
 
   return (
     <Box>
