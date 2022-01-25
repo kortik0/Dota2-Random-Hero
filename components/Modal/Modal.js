@@ -6,14 +6,14 @@ import {
   FormControlLabel,
   Switch,
 } from "@mui/material"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Button } from "../Button/Button"
 import { DialogContentWorker } from "./DialogContentWorker"
 import jsonData from "./ModalData/advancedData.json"
 import { getRandomNumber } from "../../utility/getRandomNumber"
 
 export const ModalWindow = ({ isOpen, toClose, setRandom, data }) => {
-  const { initialAttributes, initialAttackTypes, initialRoles } = {
+  const { initialAttackTypes, initialRoles, initialShorthandAttributes } = {
     ...jsonData,
   }
 
@@ -34,7 +34,9 @@ export const ModalWindow = ({ isOpen, toClose, setRandom, data }) => {
   const clickHandler = () => {
     const [{ attributes, roles, attackType }] = [selected]
 
-    const filterAttributes = attributes.length ? attributes : initialAttributes
+    const filterAttributes = attributes.length
+      ? attributes
+      : initialShorthandAttributes
     const filterAttackType = attackType.length ? attackType : initialAttackTypes
     const filterRoles = roles.length ? roles : initialRoles
 
@@ -56,19 +58,19 @@ export const ModalWindow = ({ isOpen, toClose, setRandom, data }) => {
 
     toClose()
 
-    console.log(
-      data.filter(
-        (hero) =>
-          filterAttributes.some((attr) => hero.primary_attr === attr) &&
-          filterAttackType.some((type) => hero.attack_type === type) &&
-          filterRoles.some((role) => hero.roles.includes(role))
-      )
-    )
+    // console.log(
+    //   data.filter(
+    //     (hero) =>
+    //       filterAttributes.some((attr) => hero.primary_attr === attr) &&
+    //       filterAttackType.some((type) => hero.attack_type === type) &&
+    //       filterRoles.some((role) => hero.roles.includes(role))
+    //   )
+    // )
   }
 
-  useEffect(() => {
-    console.log(selected)
-  }, [selected])
+  // useEffect(() => {
+  //   console.log(selected)
+  // }, [selected])
 
   return (
     <Dialog open={isOpen} onClose={toClose}>
