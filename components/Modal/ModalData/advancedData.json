@@ -1,0 +1,18 @@
+{
+  "_comment_": "The first version must include attributes, roles and attack_type fields. More will come next, probably",
+  "initialAttributes": ["Strength", "Agility", "Intelligence"],
+  "initialShorthandAttributes": ["str", "agi", "int"],
+  "initialRoles": [
+    "Carry",
+    "Escape",
+    "Nuker",
+    "Initiator",
+    "Durable",
+    "Disabler",
+    "Jungler",
+    "Support",
+    "Pusher"
+  ],
+ "initialAttackTypes": ["Melee", "Ranged"]
+}
+

@@ -2,6 +2,8 @@ import { Box, Grid } from "@mui/material"
 import { Text } from "./Text"
 import clsx from "clsx"
 
+import Image from "next/image"
+
 const gridGenerator = (heroes, ability, id) => {
   return (
     <>
@@ -14,20 +16,20 @@ const gridGenerator = (heroes, ability, id) => {
         <Grid container item style={{ marginTop: "25px" }}>
           {heroes.map((hero) => (
             <Grid
+              style={{ marginLeft: "15px" }}
               key={hero.name}
               item
               className={clsx("Image", { randomed: id === hero.id })}
             >
-              <img
+              <Image
                 key={hero.name}
                 alt={hero.name}
-                style={{
-                  width: "110px",
-                  height: "85px",
-                  marginLeft: "15px",
-                  objectFit: "cover",
-                }}
+                width={"110px"}
+                height={"77px"}
+                objectFit={"cover"}
+                quality={100}
                 src={getHeroName(hero.name)}
+                unoptimized={true} //need advice
               />
             </Grid>
           ))}
@@ -48,13 +50,15 @@ export default function HeroDisplay({ data, randomed }) {
   const agility = data.filter((hero) => hero.primary_attr === "agi")
   const intelligence = data.filter((hero) => hero.primary_attr === "int")
 
-  console.log(
-    `Hi. This is Hero Block. Your hero data is ${randomed.name}, with type ${randomed.attackType} and with many roles ${randomed.roles}. ID: ${randomed.id}`
-  )
+  // console.log(
+  //   `Hi. This is Hero Block. Your hero data is ${randomed.name}, with type ${randomed.attackType} and with many roles ${randomed.roles}. ID: ${randomed.id}`
+  // )
 
-  const randomedHeroID = data.filter((_, index) => index === randomed.id)[0]?.id
+  const randomedHeroID = data.filter(
+    (hero) => hero.localized_name === randomed.name
+  )[0]?.id
 
-  console.log(randomedHeroID)
+  // console.log(randomedHeroID)
 
   return (
     <Grid container direction={"row"} mt={"5px"} pl={"5px"}>
