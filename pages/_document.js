@@ -21,6 +21,7 @@ export default class ThisAppDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
             rel="stylesheet"
           />
+          <link rel="icon" href="../public/favicon.ico" type="image/x-icon" />
           <script
             async
             src="https://www.googletagmanager.com/gtag/js?id=G-F763H691PC"
