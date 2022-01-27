@@ -29,7 +29,6 @@ const gridGenerator = (heroes, ability, id) => {
                 objectFit={"cover"}
                 quality={100}
                 src={getHeroName(hero.name)}
-                unoptimized={true} //need advice
               />
             </Grid>
           ))}
@@ -40,7 +39,7 @@ const gridGenerator = (heroes, ability, id) => {
 }
 
 const getHeroName = (initialName) => {
-  return `http://cdn.dota2.com/apps/dota2/images/heroes/${initialName.slice(
+  return `https://cdn.dota2.com/apps/dota2/images/heroes/${initialName.slice(
     14
   )}_lg.png`
 }
