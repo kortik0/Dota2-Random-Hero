@@ -120,6 +120,11 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
+"@corex/deepmerge@^2.6.148":
+  version "2.6.148"
+  resolved "https://registry.yarnpkg.com/@corex/deepmerge/-/deepmerge-2.6.148.tgz#8fa825d53ffd1cbcafce1b6a830eefd3dcc09dd5"
+  integrity sha512-6QMz0/2h5C3ua51iAnXMPWFbb1QOU1UvSM4bKBw5mzdT+WtLgjbETBBIQZ+Sh9WvEcGwlAt/DEdRpIC3XlDBMA==
+
 "@emotion/babel-plugin@^11.3.0":
   version "11.7.2"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.7.2.tgz#fec75f38a6ab5b304b0601c74e2a5e77c95e5fa0"
@@ -2406,7 +2411,7 @@ minimatch@^3.0.4:
   dependencies:
     brace-expansion "^1.1.7"
 
-minimist@^1.2.0, minimist@^1.2.3:
+minimist@^1.2.0, minimist@^1.2.3, minimist@^1.2.5:
   version "1.2.5"
   resolved "https://registry.npmjs.org/minimist/-/minimist-1.2.5.tgz"
   integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
@@ -2445,6 +2450,14 @@ natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
+
+next-sitemap@^2.0.7:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/next-sitemap/-/next-sitemap-2.0.7.tgz#58597d7bf9de3cfcdda79cc56ff75b5e0a5eafe3"
+  integrity sha512-QuB0j34a61FjSqOLab+57nBb9rfPEUewgpggs/BUR4CkXgglqn2eLorT0gh2lv9NA1j2rMmVH5xZTJpRlURyow==
+  dependencies:
+    "@corex/deepmerge" "^2.6.148"
+    minimist "^1.2.5"
 
 next@12.0.7:
   version "12.0.7"
