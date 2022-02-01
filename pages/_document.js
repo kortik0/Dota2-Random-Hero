@@ -5,11 +5,11 @@ export default class ThisAppDocument extends Document {
     return (
       <Html lang={"en"}>
         <Head>
-          <title>Dota 2 Hero Randomiser</title>
+          <title>Dota 2 Hero Randomizer | kortiko project</title>
           <meta
             name={"description"}
             content={
-              "Unique and modern hero randomizer for Dota 2 which allows you to filter the heroes by their attributes, type of attack, roles, difficulty to randomly choose the hero you want!"
+              "Unique and modern hero randomizer for Dota 2 which allows you to filter the heroes by their attributes, type of attack, roles, difficulty to randomly choose the hero you want! Random and find your favorite Dota Hero!"
             }
           />
           <meta
