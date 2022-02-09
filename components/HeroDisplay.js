@@ -1,4 +1,8 @@
 import { Box, Grid } from "@mui/material"
+import { motion } from "framer-motion"
+
+import { getHeroName } from "../utility/getNameHero"
+
 import { Text } from "./Text"
 import clsx from "clsx"
 
@@ -38,12 +42,6 @@ const gridGenerator = (heroes, ability, id) => {
   )
 }
 
-const getHeroName = (initialName) => {
-  return `https://cdn.dota2.com/apps/dota2/images/heroes/${initialName.slice(
-    14
-  )}_lg.png`
-}
-
 export default function HeroDisplay({ data, randomed }) {
   const strength = data.filter((hero) => hero.primary_attr === "str")
   const agility = data.filter((hero) => hero.primary_attr === "agi")
@@ -54,16 +52,30 @@ export default function HeroDisplay({ data, randomed }) {
   // )
 
   const randomedHeroID = data.filter(
-    (hero) => hero.localized_name === randomed.name
+    (hero) => hero.localized_name === randomed.localized_name
   )[0]?.id
 
-  // console.log(randomedHeroID)
-
   return (
-    <Grid container direction={"row"} mt={"5px"} pl={"5px"}>
-      {gridGenerator(strength, "Strength", randomedHeroID)}
-      {gridGenerator(agility, "Agility", randomedHeroID)}
-      {gridGenerator(intelligence, "Intelligence", randomedHeroID)}
-    </Grid>
+    <motion.div
+      initial={"hidden"}
+      animate={"visible"}
+      variants={{
+        hidden: {
+          opacity: 0,
+        },
+        visible: {
+          opacity: 1,
+          transition: {
+            duration: 1,
+          },
+        },
+      }}
+    >
+      <Grid container direction={"row"} mt={"5px"} pl={"5px"}>
+        {gridGenerator(strength, "Strength", randomedHeroID)}
+        {gridGenerator(agility, "Agility", randomedHeroID)}
+        {gridGenerator(intelligence, "Intelligence", randomedHeroID)}
+      </Grid>
+    </motion.div>
   )
 }

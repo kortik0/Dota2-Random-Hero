@@ -8,11 +8,16 @@ import {
 } from "@mui/material"
 import { useState } from "react"
 import { Button } from "../Button/Button"
+import Image from "next/image"
 import { DialogContentWorker } from "./DialogContentWorker"
 import jsonData from "./ModalData/advancedData.json"
 import { getRandomNumber } from "../../utility/getRandomNumber"
+import { Text } from "../Text"
+import { AnimatePresence, motion } from "framer-motion"
 
-export const ModalWindow = ({ isOpen, toClose, setRandom, data }) => {
+import { getHeroName } from "../../utility/getNameHero"
+
+export const ModalWindow = ({ isOpen, toClose, setRandom, randomed, data }) => {
   const { initialAttackTypes, initialRoles, initialShorthandAttributes } = {
     ...jsonData,
   }
@@ -50,13 +55,16 @@ export const ModalWindow = ({ isOpen, toClose, setRandom, data }) => {
     const id = getRandomNumber(filteredHero.length)
 
     setRandom({
-      name: filteredHero[id].localized_name,
+      localized_name: filteredHero[id].localized_name,
+      name: filteredHero[id].name,
       attackType: filteredHero[id].attack_type,
       roles: filteredHero[id].roles,
       id: filteredHero[id].id,
     })
 
-    toClose()
+    console.log(randomed)
+
+    // toClose()
 
     // console.log(
     //   data.filter(
@@ -94,12 +102,60 @@ export const ModalWindow = ({ isOpen, toClose, setRandom, data }) => {
           />
         ))}
         <br />
-        <Button
-          action={clickHandler}
-          styles={{ width: "165px", marginTop: "15px" }}
-        >
-          Random with this params
-        </Button>
+        <div style={{ display: "flex" }}>
+          <Button
+            action={clickHandler}
+            styles={{ width: "165px", marginTop: "15px" }}
+          >
+            Random with this params
+          </Button>
+        </div>
+
+        {Object.keys(randomed).length ? (
+          <>
+            <Text>Your heroes for this time is: {randomed.localized_name}</Text>
+            <AnimatePresence>
+              <motion.div
+                key={randomed.name}
+                initial={"hiddenHero"}
+                animate={"animatedHero"}
+                exit={"leaveHero"}
+                style={{ position: "relative" }}
+                variants={{
+                  hiddenHero: {
+                    left: "-300px",
+                    display: "none",
+                    // opacity: 0,
+                  },
+                  animatedHero: {
+                    left: 0,
+                    display: "initial",
+                    transition: {
+                      duration: 0.7,
+                    },
+                  },
+                  leaveHero: {
+                    left: "-300px",
+                    transition: {
+                      duration: 0.2,
+                    },
+                    // opacity: 0,
+                  },
+                }}
+              >
+                <Image
+                  key={randomed.name}
+                  alt={randomed.name}
+                  width={"110px"}
+                  height={"77px"}
+                  objectFit={"cover"}
+                  quality={100}
+                  src={getHeroName(randomed.name)}
+                />
+              </motion.div>
+            </AnimatePresence>
+          </>
+        ) : null}
       </DialogContent>
     </Dialog>
   )

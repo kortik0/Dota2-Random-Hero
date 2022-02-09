@@ -5,6 +5,9 @@ body {
   margin: 0;
   font-family: -apple-system, 'Nunito', BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  overflow:hidden;
+  overflow-y:hidden;
+  overflow-x:hidden;
 }
 
 a {
@@ -21,15 +24,17 @@ a {
   filter: grayscale(50%);
 
   outline: 2px solid #f1faee;
-
+  border-radius: 5px;
 }
 
 img:hover {
   outline: 2px solid #f1faee;
+  border-radius: 5px;
 }
 
 .randomed > span {
   outline: 4px solid #ffffff;
+  border-radius: 5px;
 }
 
 .MuiCheckbox-root {
@@ -49,7 +54,6 @@ img:hover {
 .MuiDialog-paperWidthSm {
   max-width: 855px!important;
 }
-
 
 /*The switch button*/
 .inactiveMixin {
