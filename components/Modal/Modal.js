@@ -63,22 +63,7 @@ export const ModalWindow = ({ isOpen, toClose, setRandom, randomed, data }) => {
     })
 
     console.log(randomed)
-
-    // toClose()
-
-    // console.log(
-    //   data.filter(
-    //     (hero) =>
-    //       filterAttributes.some((attr) => hero.primary_attr === attr) &&
-    //       filterAttackType.some((type) => hero.attack_type === type) &&
-    //       filterRoles.some((role) => hero.roles.includes(role))
-    //   )
-    // )
   }
-
-  // useEffect(() => {
-  //   console.log(selected)
-  // }, [selected])
 
   return (
     <Dialog open={isOpen} onClose={toClose}>
@@ -125,7 +110,6 @@ export const ModalWindow = ({ isOpen, toClose, setRandom, randomed, data }) => {
                   hiddenHero: {
                     left: "-300px",
                     display: "none",
-                    // opacity: 0,
                   },
                   animatedHero: {
                     left: 0,
@@ -139,7 +123,6 @@ export const ModalWindow = ({ isOpen, toClose, setRandom, randomed, data }) => {
                     transition: {
                       duration: 0.2,
                     },
-                    // opacity: 0,
                   },
                 }}
               >

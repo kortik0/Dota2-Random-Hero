@@ -3,18 +3,18 @@ import { motion } from "framer-motion"
 
 import { Text } from "./Text"
 import { ModalWindow } from "./Modal/Modal"
-import { useState } from "react"
+import { memo, useCallback, useState } from "react"
 import { Button } from "./Button/Button"
 import { getRandomNumber } from "../utility/getRandomNumber"
 
-export default function RandomPaper({ data, setRandomed, randomed }) {
+const RandomPaper = ({ data, setRandomed, randomed }) => {
   const [isOpen, stateOpen] = useState(false)
 
-  const dialogClickHandler = () => {
+  const dialogClickHandler = useCallback(() => {
     stateOpen(!isOpen)
-  }
+  }, [isOpen])
 
-  const clickHandler = () => {
+  const clickHandler = useCallback(() => {
     const id = getRandomNumber(data.length)
     setRandomed({
       localized_name: data[id].localized_name,
@@ -23,9 +23,7 @@ export default function RandomPaper({ data, setRandomed, randomed }) {
       roles: data[id].roles,
       id,
     })
-  }
-
-  // console.log(randomed)
+  }, [data, setRandomed])
 
   return (
     <motion.div
@@ -37,6 +35,9 @@ export default function RandomPaper({ data, setRandomed, randomed }) {
         },
         visible: {
           opacity: 1,
+          transition: {
+            duration: 1,
+          },
         },
       }}
     >
@@ -76,3 +77,5 @@ export default function RandomPaper({ data, setRandomed, randomed }) {
     </motion.div>
   )
 }
+
+export const MemulatedRandomPaper = memo(RandomPaper)
