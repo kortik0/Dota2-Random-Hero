@@ -9,6 +9,8 @@ import { useState } from "react"
 import { MemulatedRandomPaper } from "../components/RandomPaper"
 import HeroDisplay from "../components/HerosLayer/HeroDisplay"
 import GitHubIcon from "@mui/icons-material/GitHub"
+import CustomPage500 from "./500"
+import { initializeStoreDataFromApi } from "../store/store"
 
 export default function Index() {
   //({ data })
@@ -16,17 +18,20 @@ export default function Index() {
   const [randomed, setHero] = useState([])
 
   if (isError) {
-    console.error("Someting went wrong not in our side!")
+    return <CustomPage500 />
   }
 
-  return !isLoading && data ? (
+  if (!data) {
+    console.log("Wait for loading!~")
+    return <Text>Loading...</Text>
+  }
+
+  initializeStoreDataFromApi(data)
+
+  return (
     <Box>
       <>
-        <MemulatedRandomPaper
-          data={data}
-          setRandomed={setHero}
-          randomed={randomed}
-        />
+        <MemulatedRandomPaper setRandomed={setHero} randomed={randomed} />
         <br />
         <HeroDisplay data={data} randomed={randomed} />
       </>
@@ -54,7 +59,7 @@ export default function Index() {
         </Text>
       </motion.div>
     </Box>
-  ) : null
+  )
 }
 
 const GetHeroes = () => {
@@ -70,12 +75,9 @@ const GetHeroes = () => {
 }
 
 // export async function getStaticProps() {
-//   const fetcher = (...args) => fetch(...args).then((res) => res.json())
 //
-//   const { data, error } = useSWR("https://api.opendota.com/api/heroes", fetcher)
-//
-//   // const response = await fetch("https://api.opendota.com/api/heroes")
-//   // const data = await response.json()
+//   const response = await fetch("https://api.opendota.com/api/heroes")
+//   const data = await response.json()
 //
 //   return {
 //     props: {

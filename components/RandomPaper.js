@@ -5,25 +5,19 @@ import { Text } from "./Text"
 import { ModalWindow } from "./Modal/Modal"
 import { memo, useCallback, useState } from "react"
 import { Button } from "./Button/Button"
-import { getRandomNumber } from "../utility/getRandomNumber"
+import { randomTheHero, useStore } from "../store/store"
 
-const RandomPaper = ({ data, setRandomed, randomed }) => {
+const RandomPaper = ({ setRandomed, randomed }) => {
   const [isOpen, stateOpen] = useState(false)
+  const state = useStore()
 
   const dialogClickHandler = useCallback(() => {
     stateOpen(!isOpen)
   }, [isOpen])
 
   const clickHandler = useCallback(() => {
-    const id = getRandomNumber(data.length)
-    setRandomed({
-      localized_name: data[id].localized_name,
-      name: data[id].name,
-      attackType: data[id].attack_type,
-      roles: data[id].roles,
-      id,
-    })
-  }, [data, setRandomed])
+    setRandomed(randomTheHero())
+  }, [setRandomed])
 
   return (
     <motion.div
@@ -66,7 +60,7 @@ const RandomPaper = ({ data, setRandomed, randomed }) => {
               toClose={dialogClickHandler}
               setRandom={setRandomed}
               randomed={randomed}
-              data={data}
+              data={state.heroes}
             />
           </Box>
           {Object.keys(randomed).length ? (
