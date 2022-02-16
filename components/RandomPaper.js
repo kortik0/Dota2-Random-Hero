@@ -3,29 +3,21 @@ import { motion } from "framer-motion"
 
 import { Text } from "./Text"
 import { ModalWindow } from "./Modal/Modal"
-import { useState } from "react"
+import { memo, useCallback, useState } from "react"
 import { Button } from "./Button/Button"
-import { getRandomNumber } from "../utility/getRandomNumber"
+import { randomTheHero, useStore } from "../store/store"
 
-export default function RandomPaper({ data, setRandomed, randomed }) {
+const RandomPaper = ({ setRandomed, randomed }) => {
   const [isOpen, stateOpen] = useState(false)
+  const state = useStore()
 
-  const dialogClickHandler = () => {
+  const dialogClickHandler = useCallback(() => {
     stateOpen(!isOpen)
-  }
+  }, [isOpen])
 
-  const clickHandler = () => {
-    const id = getRandomNumber(data.length)
-    setRandomed({
-      localized_name: data[id].localized_name,
-      name: data[id].name,
-      attackType: data[id].attack_type,
-      roles: data[id].roles,
-      id,
-    })
-  }
-
-  // console.log(randomed)
+  const clickHandler = useCallback(() => {
+    setRandomed(randomTheHero())
+  }, [setRandomed])
 
   return (
     <motion.div
@@ -37,6 +29,9 @@ export default function RandomPaper({ data, setRandomed, randomed }) {
         },
         visible: {
           opacity: 1,
+          transition: {
+            duration: 1,
+          },
         },
       }}
     >
@@ -65,7 +60,7 @@ export default function RandomPaper({ data, setRandomed, randomed }) {
               toClose={dialogClickHandler}
               setRandom={setRandomed}
               randomed={randomed}
-              data={data}
+              data={state.heroes}
             />
           </Box>
           {Object.keys(randomed).length ? (
@@ -76,3 +71,5 @@ export default function RandomPaper({ data, setRandomed, randomed }) {
     </motion.div>
   )
 }
+
+export const MemulatedRandomPaper = memo(RandomPaper)
