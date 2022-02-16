@@ -11,6 +11,7 @@ import HeroDisplay from "../components/HerosLayer/HeroDisplay"
 import GitHubIcon from "@mui/icons-material/GitHub"
 import CustomPage500 from "./500"
 import { initializeStoreDataFromApi } from "../store/store"
+import { Loader } from "../components/Loader"
 
 export default function Index() {
   //({ data })
@@ -23,7 +24,7 @@ export default function Index() {
 
   if (!data) {
     console.log("Wait for loading!~")
-    return <Text>Loading...</Text>
+    return <Loader />
   }
 
   initializeStoreDataFromApi(data)

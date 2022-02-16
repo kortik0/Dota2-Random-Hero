@@ -43,9 +43,6 @@ export default function HeroDisplay({ data, randomed }) {
           ability={"Intelligence"}
           id={randomedHeroID}
         />
-        {/*{gridGenerator(strength, "Strength", randomedHeroID)}*/}
-        {/*{gridGenerator(agility, "Agility", randomedHeroID)}*/}
-        {/*{gridGenerator(intelligence, "Intelligence", randomedHeroID)}*/}
       </Grid>
     </motion.div>
   )
