@@ -5,9 +5,6 @@ body {
   margin: 0;
   font-family: -apple-system, 'Nunito', BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  overflow:hidden;
-  overflow-y:hidden;
-  overflow-x:hidden;
 }
 
 a {

@@ -6,7 +6,6 @@ import { getHeroName } from "../../../utility/getNameHero"
 import { memo } from "react"
 
 const gridGenerator = ({ heroes, ability, id }) => {
-  console.log(ability)
   return (
     <>
       <Grid container item sm={4} position={"relative"} height={"100%"}>

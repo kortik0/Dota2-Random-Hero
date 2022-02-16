@@ -1,8 +1,13 @@
 import { Grid } from "@mui/material"
 import { motion } from "framer-motion"
 import { MemorizedGrid } from "./GridLists/GridGenerator"
+import { useStore } from "../../store/store"
 
-export default function HeroDisplay({ data, randomed }) {
+export default function HeroDisplay({ randomed }) {
+  const state = useStore()
+
+  const data = state.heroes
+
   const strength = data.filter((hero) => hero.primary_attr === "str")
   const agility = data.filter((hero) => hero.primary_attr === "agi")
   const intelligence = data.filter((hero) => hero.primary_attr === "int")
@@ -27,7 +32,7 @@ export default function HeroDisplay({ data, randomed }) {
         },
       }}
     >
-      <Grid container direction={"row"} mt={"5px"} pl={"5px"}>
+      <Grid container direction={"row"} pl={"5px"}>
         <MemorizedGrid
           heroes={strength}
           ability={"Strength"}
