@@ -2,7 +2,7 @@
 import useSWR from "swr"
 
 import { Box } from "@mui/material"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { MemulatedRandomPaper } from "../components/RandomPaper"
 import HeroDisplay from "../components/HerosLayer/HeroDisplay"
 import CustomPage500 from "./500"
@@ -24,7 +24,9 @@ export default function Index() {
     return <Loader />
   }
 
-  initializeStoreDataFromApi(data)
+  useEffect(() => {
+    initializeStoreDataFromApi(data)
+  }, [initializeStoreDataFromApi, data])
 
   return (
     <Box>

@@ -52,7 +52,20 @@ export const ModalWindow = ({ isOpen, toClose, setRandom, randomed, data }) => {
         filterRoles.some((role) => hero.roles.includes(role))
     )
 
-    const id = getRandomNumber(filteredHero.length)
+    if (filteredHero.length === 1) {
+      setRandom({
+        localized_name: filteredHero[0].localized_name,
+        name: filteredHero[0].name,
+        attackType: filteredHero[0].attack_type,
+        roles: filteredHero[0].roles,
+        id: filteredHero[0].id,
+        caution: true,
+      })
+
+      return
+    }
+
+    const id = getRandomNumber(filteredHero.length, filteredHero, randomed)
 
     setRandom({
       localized_name: filteredHero[id].localized_name,
@@ -61,8 +74,6 @@ export const ModalWindow = ({ isOpen, toClose, setRandom, randomed, data }) => {
       roles: filteredHero[id].roles,
       id: filteredHero[id].id,
     })
-
-    console.log(randomed)
   }
 
   return (
@@ -136,6 +147,12 @@ export const ModalWindow = ({ isOpen, toClose, setRandom, randomed, data }) => {
                   src={getHeroName(randomed.name)}
                 />
               </motion.div>
+              {randomed.caution ? (
+                <Text>
+                  With these options, only 1 hero is possible to be randomized!
+                  If you want a more pool, select or turn off some options.
+                </Text>
+              ) : null}
             </AnimatePresence>
           </>
         ) : null}
