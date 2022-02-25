@@ -6,14 +6,15 @@ import { useState } from "react"
 import { MemulatedRandomPaper } from "../components/RandomPaper"
 import HeroDisplay from "../components/HerosLayer/HeroDisplay"
 import CustomPage500 from "./500"
-import { initializeStoreDataFromApi } from "../store/store"
 import { Loader } from "../components/Loader"
 import { Copyright } from "../components/Copyright"
+import { useStore } from "../store/store"
 
 export default function Index() {
   //({ data })
   const { isLoading, isError, data } = GetHeroes()
   const [randomed, setHero] = useState([])
+  const init = useStore((state) => state.initializeHero)
 
   if (isError) {
     return <CustomPage500 />
@@ -24,7 +25,7 @@ export default function Index() {
     return <Loader />
   }
 
-  initializeStoreDataFromApi(data)
+  init(data)
 
   return (
     <Box>
@@ -49,16 +50,3 @@ const GetHeroes = () => {
     isLoading: !error && !data,
   }
 }
-
-// export async function getStaticProps() {
-//
-//   const response = await fetch("https://api.opendota.com/api/heroes")
-//   const data = await response.json()
-//
-//   return {
-//     props: {
-//       data,
-//       fallback: false,
-//     },
-//   }
-// }

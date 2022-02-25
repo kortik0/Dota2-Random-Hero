@@ -11,13 +11,15 @@ import { Button } from "../Button/Button"
 import Image from "next/image"
 import { DialogContentWorker } from "./DialogContentWorker"
 import jsonData from "./ModalData/advancedData.json"
-import { getRandomNumber } from "../../utility/getRandomNumber"
 import { Text } from "../Text"
 import { AnimatePresence, motion } from "framer-motion"
 
 import { getHeroName } from "../../utility/getNameHero"
+import { randomHero, useStore } from "../../store/store"
 
-export const ModalWindow = ({ isOpen, toClose, setRandom, randomed, data }) => {
+export const ModalWindow = ({ isOpen, toClose, data }) => {
+  const { randomed } = useStore()
+
   const { initialAttackTypes, initialRoles, initialShorthandAttributes } = {
     ...jsonData,
   }
@@ -50,30 +52,9 @@ export const ModalWindow = ({ isOpen, toClose, setRandom, randomed, data }) => {
         filterAttributes.some((attr) => hero.primary_attr === attr) &&
         filterAttackType.some((type) => hero.attack_type === type) &&
         filterRoles.some((role) => hero.roles.includes(role))
-    )
+    ) //I need to optimize this some day
 
-    if (filteredHero.length === 1) {
-      setRandom({
-        localized_name: filteredHero[0].localized_name,
-        name: filteredHero[0].name,
-        attackType: filteredHero[0].attack_type,
-        roles: filteredHero[0].roles,
-        id: filteredHero[0].id,
-        caution: true,
-      })
-
-      return
-    }
-
-    const id = getRandomNumber(filteredHero.length, filteredHero, randomed)
-
-    setRandom({
-      localized_name: filteredHero[id].localized_name,
-      name: filteredHero[id].name,
-      attackType: filteredHero[id].attack_type,
-      roles: filteredHero[id].roles,
-      id: filteredHero[id].id,
-    })
+    randomHero(filteredHero)
   }
 
   return (

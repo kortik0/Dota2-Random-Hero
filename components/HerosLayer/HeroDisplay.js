@@ -3,10 +3,9 @@ import { motion } from "framer-motion"
 import { MemorizedGrid } from "./GridLists/GridGenerator"
 import { useStore } from "../../store/store"
 
-export default function HeroDisplay({ randomed }) {
-  const state = useStore()
-
-  const data = state.heroes
+export default function HeroDisplay() {
+  const data = useStore((state) => state.heroes)
+  const randomed = useStore((state) => state.randomed)
 
   const strength = data.filter((hero) => hero.primary_attr === "str")
   const agility = data.filter((hero) => hero.primary_attr === "agi")

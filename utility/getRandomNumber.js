@@ -1,10 +1,18 @@
-export const getRandomNumber = (max, filter, currenRandomed) => {
+export const getRandomNumber = (filter, currentRandomed) => {
+  const max = filter.length
   const rand = Math.floor(Math.random() * max)
 
-  if (filter[rand].name === currenRandomed?.name) {
-    console.log("Need to be rerandomed!")
-    return getRandomNumber(max, filter, currenRandomed)
+  if (filter.length === 1) {
+    return {
+      rand,
+      caution: true,
+    }
   }
 
-  return rand
+  if (filter[rand].name === currentRandomed?.name) {
+    console.log("Need to be rerandomed!")
+    return getRandomNumber(filter, currentRandomed)
+  }
+
+  return { rand, caution: false }
 }

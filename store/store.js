@@ -1,27 +1,36 @@
-import { proxy, useSnapshot } from "valtio"
+import create from "zustand"
+import { devtools } from "zustand/middleware"
+
 import { getRandomNumber } from "../utility/getRandomNumber"
 
-const store = proxy({
-  heroes: [],
-  randomed: { localized_name: "", name: "", attackType: "", roles: "", id: "" },
-})
+export const useStore = create(
+  //WTF WRONG WITH, TS?
+  devtools((set) => ({
+    heroes: [],
+    randomed: {},
+    initializeHero: (data) => {
+      set({
+        heroes: data,
+      })
+    },
+  }))
+)
 
-export const initializeStoreDataFromApi = (apiData) => {
-  store.heroes = apiData
-  console.log(store)
-}
+export const randomHero = (filter) => {
+  const get = useStore.getState()
 
-export const randomTheHero = () => {
-  const id = getRandomNumber(store.heroes.length, store.heroes)
-  return {
-    localized_name: store.heroes[id].localized_name,
-    name: store.heroes[id].name,
-    attackType: store.heroes[id].attack_type,
-    roles: store.heroes[id].roles,
-    id,
-  }
-}
+  const heroCollector = filter || get.heroes
 
-export const useStore = () => {
-  return useSnapshot(store)
+  const { rand, caution } = getRandomNumber(heroCollector, get.randomed)
+
+  useStore.setState({
+    randomed: {
+      localized_name: heroCollector[rand].localized_name,
+      name: heroCollector[rand].name,
+      attackType: heroCollector[rand].attack_type,
+      roles: heroCollector[rand].roles,
+      id: rand,
+      caution,
+    },
+  })
 }

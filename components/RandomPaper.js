@@ -5,19 +5,20 @@ import { Text } from "./Text"
 import { ModalWindow } from "./Modal/Modal"
 import { memo, useCallback, useState } from "react"
 import { Button } from "./Button/Button"
-import { randomTheHero, useStore } from "../store/store"
+// import { randomTheHero, useStore } from "../store/store"
+import { useStore, randomHero } from "../store/store"
 
-const RandomPaper = ({ setRandomed, randomed }) => {
+const RandomPaper = () => {
   const [isOpen, stateOpen] = useState(false)
-  const state = useStore()
+  const { heroes, randomed } = useStore()
 
   const dialogClickHandler = useCallback(() => {
     stateOpen(!isOpen)
   }, [isOpen])
 
   const clickHandler = useCallback(() => {
-    setRandomed(randomTheHero())
-  }, [setRandomed])
+    randomHero()
+  }, [])
 
   return (
     <motion.div
@@ -58,9 +59,7 @@ const RandomPaper = ({ setRandomed, randomed }) => {
               className={"advancedDialog"}
               isOpen={isOpen}
               toClose={dialogClickHandler}
-              setRandom={setRandomed}
-              randomed={randomed}
-              data={state.heroes}
+              data={heroes}
             />
           </Box>
           {Object.keys(randomed).length ? (
