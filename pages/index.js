@@ -2,18 +2,18 @@
 import useSWR from "swr"
 
 import { Box } from "@mui/material"
-import { useState } from "react"
 import { MemulatedRandomPaper } from "../components/RandomPaper"
 import HeroDisplay from "../components/HerosLayer/HeroDisplay"
 import CustomPage500 from "./500"
 import { Loader } from "../components/Loader"
 import { Copyright } from "../components/Copyright"
 import { useStore } from "../store/store"
+import { motion } from "framer-motion"
+import { useRef } from "react"
 
 export default function Index() {
-  //({ data })
+  const ref = useRef(null)
   const { isLoading, isError, data } = GetHeroes()
-  const [randomed, setHero] = useState([])
   const init = useStore((state) => state.initializeHero)
 
   if (isError) {
@@ -27,15 +27,43 @@ export default function Index() {
 
   init(data)
 
+  setTimeout(() => (ref.current.style.display = "none"), 1000)
+
   return (
-    <Box>
-      <>
-        <MemulatedRandomPaper setRandomed={setHero} randomed={randomed} />
+    <>
+      <motion.div
+        ref={ref}
+        style={{
+          zIndex: 50,
+          background: "#1d3557",
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
+        initial={"hidden"}
+        animate={"visible"}
+        variants={{
+          hidden: {
+            opacity: 1,
+          },
+          visible: {
+            opacity: 0,
+            transition: {
+              duration: 1,
+            },
+          },
+        }}
+      />
+      <Box>
+        <MemulatedRandomPaper />
         <br />
-        <HeroDisplay data={data} randomed={randomed} />
-      </>
-      <Copyright />
-    </Box>
+        <HeroDisplay />
+
+        <Copyright />
+      </Box>
+    </>
   )
 }
 

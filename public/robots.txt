@@ -7,4 +7,3 @@ Host: https://randomdotahero.vercel.app
 
 # Sitemaps
 Sitemap: https://randomdotahero.vercel.app/sitemap.xml
-Sitemap: https://randomdotahero.vercel.app/sitemap-0.xml

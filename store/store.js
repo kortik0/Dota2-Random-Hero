@@ -5,12 +5,25 @@ import { getRandomNumber } from "../utility/getRandomNumber"
 
 export const useStore = create(
   //WTF WRONG WITH, TS?
-  devtools((set) => ({
+  devtools((set, get) => ({
     heroes: [],
+    strength: [],
+    agility: [],
+    intelligence: [],
     randomed: {},
     initializeHero: (data) => {
       set({
         heroes: data,
+      })
+      get().listOfAttributedHero()
+    },
+    listOfAttributedHero: () => {
+      set({
+        strength: get().heroes.filter((hero) => hero.primary_attr === "str"),
+        agility: get().heroes.filter((hero) => hero.primary_attr === "agi"),
+        intelligence: get().heroes.filter(
+          (hero) => hero.primary_attr === "int"
+        ),
       })
     },
   }))
@@ -23,13 +36,29 @@ export const randomHero = (filter) => {
 
   const { rand, caution } = getRandomNumber(heroCollector, get.randomed)
 
+  const roleWriter = () => {
+    switch (heroCollector[rand].primary_attr) {
+      case "int":
+        return "intelligence"
+      case "agi":
+        return "agility"
+      case "str":
+        return "strength"
+    }
+  }
+
+  const randomedHeroID = get.heroes.filter(
+    (hero) => hero.localized_name === heroCollector[rand].localized_name
+  )[0]?.id
+
   useStore.setState({
     randomed: {
       localized_name: heroCollector[rand].localized_name,
       name: heroCollector[rand].name,
       attackType: heroCollector[rand].attack_type,
       roles: heroCollector[rand].roles,
-      id: rand,
+      attributes: roleWriter(),
+      id: randomedHeroID,
       caution,
     },
   })

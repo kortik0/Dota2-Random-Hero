@@ -111,7 +111,7 @@ export const ModalWindow = ({ isOpen, toClose, data }) => {
                     },
                   },
                   leaveHero: {
-                    left: "-300px",
+                    bottom: "-300px",
                     transition: {
                       duration: 0.2,
                     },
