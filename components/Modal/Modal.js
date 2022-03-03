@@ -8,13 +8,12 @@ import {
 } from "@mui/material"
 import { useState } from "react"
 import { Button } from "../Button/Button"
-import Image from "next/image"
+import { MyImage } from "../Image"
 import { DialogContentWorker } from "./DialogContentWorker"
 import jsonData from "./ModalData/advancedData.json"
 import { Text } from "../Text"
 import { AnimatePresence, motion } from "framer-motion"
 
-import { getHeroName } from "../../utility/getNameHero"
 import { randomHero, useStore } from "../../store/store"
 
 export const ModalWindow = ({ isOpen, toClose, data }) => {
@@ -118,15 +117,7 @@ export const ModalWindow = ({ isOpen, toClose, data }) => {
                   },
                 }}
               >
-                <Image
-                  key={randomed.name}
-                  alt={randomed.name}
-                  width={"110px"}
-                  height={"77px"}
-                  objectFit={"cover"}
-                  quality={100}
-                  src={getHeroName(randomed.name)}
-                />
+                <MyImage hero={randomed} />
               </motion.div>
               {randomed.caution ? (
                 <Text>

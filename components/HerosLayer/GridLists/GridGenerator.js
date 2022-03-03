@@ -1,8 +1,7 @@
 import { Box, Grid } from "@mui/material"
 import { Text } from "../../Text"
 import clsx from "clsx"
-import Image from "next/image"
-import { getHeroName } from "../../../utility/getNameHero"
+import { MyImage } from "../../Image"
 import { memo, useCallback } from "react"
 import { useStore } from "../../../store/store"
 
@@ -31,16 +30,7 @@ const GridGenerator = ({ ability }) => {
                 randomed: randomed.id === hero.id,
               })}
             >
-              <Image
-                key={hero.name}
-                alt={"No response from Dota 2 API for" + hero.name}
-                width={"110px"}
-                height={"77px"}
-                objectFit={"cover"}
-                quality={100}
-                src={getHeroName(hero.name)}
-                loading={"lazy"}
-              />
+              <MyImage hero={hero} />
             </Grid>
           ))}
         </Grid>
