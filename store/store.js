@@ -1,24 +1,65 @@
-import { proxy, useSnapshot } from "valtio"
+import create from "zustand"
+import { devtools } from "zustand/middleware"
+
 import { getRandomNumber } from "../utility/getRandomNumber"
 
-const store = proxy({ heroes: [] })
+export const useStore = create(
+  //WTF WRONG WITH, TS?
+  devtools((set, get) => ({
+    heroes: [],
+    strength: [],
+    agility: [],
+    intelligence: [],
+    randomed: {},
+    initializeHero: (data) => {
+      set({
+        heroes: data,
+      })
+      get().listOfAttributedHero()
+    },
+    listOfAttributedHero: () => {
+      set({
+        strength: get().heroes.filter((hero) => hero.primary_attr === "str"),
+        agility: get().heroes.filter((hero) => hero.primary_attr === "agi"),
+        intelligence: get().heroes.filter(
+          (hero) => hero.primary_attr === "int"
+        ),
+      })
+    },
+  }))
+)
 
-export const initializeStoreDataFromApi = (apiData) => {
-  store.heroes = apiData
-  console.log(store)
-}
+export const randomHero = (filter) => {
+  const get = useStore.getState()
 
-export const randomTheHero = () => {
-  const id = getRandomNumber(store.heroes.length)
-  return {
-    localized_name: store.heroes[id].localized_name,
-    name: store.heroes[id].name,
-    attackType: store.heroes[id].attack_type,
-    roles: store.heroes[id].roles,
-    id,
+  const heroCollector = filter || get.heroes
+
+  const { rand, caution } = getRandomNumber(heroCollector, get.randomed)
+
+  const roleWriter = () => {
+    switch (heroCollector[rand].primary_attr) {
+      case "int":
+        return "intelligence"
+      case "agi":
+        return "agility"
+      case "str":
+        return "strength"
+    }
   }
-}
 
-export const useStore = () => {
-  return useSnapshot(store)
+  const randomedHeroID = get.heroes.filter(
+    (hero) => hero.localized_name === heroCollector[rand].localized_name
+  )[0]?.id
+
+  useStore.setState({
+    randomed: {
+      localized_name: heroCollector[rand].localized_name,
+      name: heroCollector[rand].name,
+      attackType: heroCollector[rand].attack_type,
+      roles: heroCollector[rand].roles,
+      attributes: roleWriter(),
+      id: randomedHeroID,
+      caution,
+    },
+  })
 }

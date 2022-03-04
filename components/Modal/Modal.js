@@ -8,16 +8,17 @@ import {
 } from "@mui/material"
 import { useState } from "react"
 import { Button } from "../Button/Button"
-import Image from "next/image"
+import { MyImage } from "../Image"
 import { DialogContentWorker } from "./DialogContentWorker"
 import jsonData from "./ModalData/advancedData.json"
-import { getRandomNumber } from "../../utility/getRandomNumber"
 import { Text } from "../Text"
 import { AnimatePresence, motion } from "framer-motion"
 
-import { getHeroName } from "../../utility/getNameHero"
+import { randomHero, useStore } from "../../store/store"
 
-export const ModalWindow = ({ isOpen, toClose, setRandom, randomed, data }) => {
+export const ModalWindow = ({ isOpen, toClose, data }) => {
+  const { randomed } = useStore()
+
   const { initialAttackTypes, initialRoles, initialShorthandAttributes } = {
     ...jsonData,
   }
@@ -50,19 +51,9 @@ export const ModalWindow = ({ isOpen, toClose, setRandom, randomed, data }) => {
         filterAttributes.some((attr) => hero.primary_attr === attr) &&
         filterAttackType.some((type) => hero.attack_type === type) &&
         filterRoles.some((role) => hero.roles.includes(role))
-    )
+    ) //I need to optimize this some day
 
-    const id = getRandomNumber(filteredHero.length)
-
-    setRandom({
-      localized_name: filteredHero[id].localized_name,
-      name: filteredHero[id].name,
-      attackType: filteredHero[id].attack_type,
-      roles: filteredHero[id].roles,
-      id: filteredHero[id].id,
-    })
-
-    console.log(randomed)
+    randomHero(filteredHero)
   }
 
   return (
@@ -119,23 +110,21 @@ export const ModalWindow = ({ isOpen, toClose, setRandom, randomed, data }) => {
                     },
                   },
                   leaveHero: {
-                    left: "-300px",
+                    bottom: "-300px",
                     transition: {
                       duration: 0.2,
                     },
                   },
                 }}
               >
-                <Image
-                  key={randomed.name}
-                  alt={randomed.name}
-                  width={"110px"}
-                  height={"77px"}
-                  objectFit={"cover"}
-                  quality={100}
-                  src={getHeroName(randomed.name)}
-                />
+                <MyImage hero={randomed} />
               </motion.div>
+              {randomed.caution ? (
+                <Text>
+                  With these options, only 1 hero is possible to be randomized!
+                  If you want a more pool, select or turn off some options.
+                </Text>
+              ) : null}
             </AnimatePresence>
           </>
         ) : null}
