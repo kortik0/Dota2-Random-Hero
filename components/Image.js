@@ -10,7 +10,7 @@ export const MyImage = ({ hero }) => {
       objectFit={"cover"}
       width={110}
       height={77}
-      quality={100}
+      quality={70}
       loading={"lazy"}
     />
   )
