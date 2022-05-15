@@ -11,6 +11,7 @@ const MemulatedRandomPaper = dynamic(() =>
     (component) => component.MemulatedRandomPaper
   )
 )
+
 const CustomPage500 = dynamic(() => import("./500"))
 
 import { useRef } from "react" //Read about Suspense

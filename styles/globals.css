@@ -25,12 +25,18 @@ a {
 }
 
 img:hover {
+  cursor: pointer;
+  filter: grayscale(50%);
+
   outline: 2px solid #f1faee;
   border-radius: 5px;
 }
 
-.randomed > span {
-  outline: 4px solid #ffffff;
+.randomed {
+  cursor: pointer;
+  filter: grayscale(50%);
+
+  outline: 2px solid #f1faee;
   border-radius: 5px;
 }
 
