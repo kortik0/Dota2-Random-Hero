@@ -11,20 +11,23 @@ export default React.memo(
       useCallback((state) => state[ability.toLowerCase()], [ability])
     )
 
-    // const randomed = useStore((state) =>
-    //   state.randomed.attributes === ability ? state.randomed : null
-    // )
-
     return (
       <>
         <Grid container item sm={4} position={"relative"} height={"100%"}>
-          <Box position={"absolute"} left={"30%"}>
+          <Box position={"absolute"} left={"50%"}>
             <Text styles={{ fontWeight: "bold" }} color={"#f1faee"}>
               {ability.toUpperCase()}
             </Text>
           </Box>
           <Grid container item style={{ marginTop: "25px" }}>
             {heroes.map((hero) => (
+              /** TODO: Now I need to come up with how I supposed to things better with not so cost operation
+               *  I mean now it's mark three randomed hero. 1 on each GridGenerator (If randomed has hero from this section).
+               *  I need somehow to hide this. But how...
+               *  Now it took much lesser time to show which hero was randomed. Great.
+               *  It's now looks better and works faster. Pretty much!
+               *  Oh, dear Lord give me more time in a day to make more feature and made them more optimized...
+               */
               <Grid
                 style={{ marginLeft: "15px" }}
                 key={hero.name}
@@ -32,10 +35,10 @@ export default React.memo(
                 /*
                  * TODO: Come up with how to choose exact person with minimum re-render cost
                  * Without this - 4.6ms is average, but with it grow to 50-60-70
-                 * Seem's like done. Now it took average 20-25ms.
+                 * Seem's like done. Now it took average 15-25ms.
                  * */
                 className={clsx("Image", {
-                  randomed: randomedHero?.id === hero.id,
+                  randomed: randomedHero.id === hero.id,
                 })}
               >
                 <MyImage hero={hero} />
@@ -54,3 +57,6 @@ export default React.memo(
     }
   }
 )
+
+//React.memo - for control re-renders
+//useMemo - for control difficult function
