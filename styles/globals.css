@@ -32,7 +32,7 @@ img:hover {
   border-radius: 5px;
 }
 
-.randomed {
+.randomed > span {
   cursor: pointer;
   filter: grayscale(50%);
 

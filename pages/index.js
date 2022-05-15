@@ -3,14 +3,11 @@ import useSWR from "swr"
 import dynamic from "next/dynamic"
 import { motion } from "framer-motion"
 
-const HeroDisplay = dynamic(() =>
+const HeroDispayMemoized = dynamic(() =>
   import("../components/HerosLayer/HeroDisplay")
 )
-const MemulatedRandomPaper = dynamic(() =>
-  import("../components/RandomPaper").then(
-    (component) => component.MemulatedRandomPaper
-  )
-)
+
+const MemulatedRandomPaper = dynamic(() => import("../components/RandomPaper"))
 
 const CustomPage500 = dynamic(() => import("./500"))
 
@@ -70,7 +67,7 @@ export default function Index() {
       <Box>
         <MemulatedRandomPaper />
         <br />
-        <HeroDisplay />
+        <HeroDispayMemoized />
 
         <Copyright />
       </Box>
