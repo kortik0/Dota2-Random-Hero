@@ -4,7 +4,6 @@ export const interpolationSearch = (sortedArray, seekElement) => {
     return -1
   }
 
-  console.log(sortedArray, seekElement)
   let leftIndex = 0
   let rightIndex = sortedArray.length - 1
 
