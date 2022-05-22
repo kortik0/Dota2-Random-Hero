@@ -12,6 +12,8 @@
   "dependencies": {
     "@emotion/react": "11.8.1",
     "@emotion/styled": "11.8.1",
+    "@mantine/core": "^4.2.6",
+    "@mantine/hooks": "^4.2.6",
     "@mui/icons-material": "5.4.2",
     "@mui/material": "5.4.3",
     "clsx": "^1.1.1",

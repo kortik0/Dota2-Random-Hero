@@ -1,6 +1,7 @@
-import { ButtonGroup, DialogContentText } from "@mui/material"
+import { DialogContentText } from "@mui/material"
 import { SelectButton } from "./SelectButton"
 import data from "./ModalData/advancedData.json"
+import { Group } from "@mantine/core"
 
 export const DialogContentWorker = ({
   clickHandler,
@@ -16,6 +17,7 @@ export const DialogContentWorker = ({
   } = { ...data }
 
   const selectClickHandler = (value, attachedSection) => {
+    console.log(currentSelected, attachedSection, value)
     clickHandler({
       ...currentSelected,
       [attachedSection]: currentSelected[attachedSection].includes(value)
@@ -33,11 +35,7 @@ export const DialogContentWorker = ({
       <DialogContentText key={`${currentContent}_Modal_Content`}>
         {currentContent}
       </DialogContentText>
-      <ButtonGroup
-        key={`${currentContent}_Button_Group`}
-        variant="outlined"
-        aria-label="outlined primary button group"
-      >
+      <Group>
         {currentContent === "Attributes" &&
           initialAttributes.map((attribute, index) => (
             <SelectButton
@@ -71,7 +69,7 @@ export const DialogContentWorker = ({
               attached={"attackType"}
             />
           ))}
-      </ButtonGroup>
+      </Group>
     </>
   )
 }

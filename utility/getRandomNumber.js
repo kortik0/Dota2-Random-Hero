@@ -9,6 +9,8 @@ export const getRandomNumber = (filter, currentRandomed) => {
     }
   }
 
+  console.log(filter)
+
   if (filter[rand].name === currentRandomed?.name) {
     console.log("Need to be rerandomed!")
     return getRandomNumber(filter, currentRandomed)

@@ -1,4 +1,4 @@
-import { Button } from "@mui/material"
+import { Button } from "@mantine/core"
 import clsx from "clsx"
 
 export const SelectButton = ({
@@ -14,10 +14,10 @@ export const SelectButton = ({
       className={clsx({
         Selected: selectedData[attached]?.includes(value),
       })}
-      onClick={(e) => clickHandler(value, e.target.name)}
+      onClick={() => clickHandler(value, attached)}
       style={style}
       value={value}
-      name={attached}
+      variant={"outline"}
     >
       {data}
     </Button>
