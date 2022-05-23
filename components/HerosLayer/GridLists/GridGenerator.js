@@ -1,21 +1,19 @@
 import { Box, Grid } from "@mui/material"
 import { Text } from "../../Text"
-import clsx from "clsx"
 import { MyImage } from "../../Image"
-import { memo, useCallback } from "react"
+import React, { useCallback } from "react"
 import { useStore } from "../../../store/store"
+import clsx from "clsx"
 
-const GridGenerator = ({ ability }) => {
+export default React.memo(function GridGenerator({ ability }) {
   const heroes = useStore(
     useCallback((state) => state[ability.toLowerCase()], [ability])
   )
 
-  const randomed = useStore((state) => state.randomed)
-
   return (
     <>
       <Grid container item sm={4} position={"relative"} height={"100%"}>
-        <Box position={"absolute"} left={"30%"}>
+        <Box position={"absolute"} left={"50%"}>
           <Text styles={{ fontWeight: "bold" }} color={"#f1faee"}>
             {ability.toUpperCase()}
           </Text>
@@ -24,11 +22,10 @@ const GridGenerator = ({ ability }) => {
           {heroes.map((hero) => (
             <Grid
               style={{ marginLeft: "15px" }}
+              heroid={hero.id}
               key={hero.name}
               item
-              className={clsx("Image", {
-                randomed: randomed.id === hero.id,
-              })}
+              className={clsx("Image")}
             >
               <MyImage hero={hero} />
             </Grid>
@@ -37,6 +34,17 @@ const GridGenerator = ({ ability }) => {
       </Grid>
     </>
   )
-}
+})
 
-export const MemorizedGrid = memo(GridGenerator)
+/*
+ * (prevProps, nextProps) => { <--- I don't know that I can do something like that. LMAO. I don't see this in documentation earlier!
+ *    if (nextProps.randomedHero?.attributes === nextProps.ability) {
+ *      return false //If it false - you need to re-render
+ *    } else {
+ *      return true
+ *    }
+ *  }
+ * */
+
+//React.memo - for control re-renders
+//useMemo - for control difficult function

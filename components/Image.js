@@ -9,8 +9,8 @@ export const MyImage = ({ hero }) => {
       src={getHeroName(hero.name)}
       objectFit={"cover"}
       width={110}
-      height={77}
-      quality={100}
+      height={71}
+      quality={70}
       loading={"lazy"}
     />
   )

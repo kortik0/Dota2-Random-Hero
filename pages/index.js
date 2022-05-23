@@ -1,15 +1,21 @@
 // import { Header } from "../components/Header"
 import useSWR from "swr"
+import dynamic from "next/dynamic"
+import { motion } from "framer-motion"
 
+const HeroDispayMemoized = dynamic(() =>
+  import("../components/HerosLayer/HeroDisplay")
+)
+
+const MemulatedRandomPaper = dynamic(() => import("../components/RandomPaper"))
+
+const CustomPage500 = dynamic(() => import("./500"))
+
+import { useRef } from "react" //Read about Suspense
 import { Box } from "@mui/material"
-import { MemulatedRandomPaper } from "../components/RandomPaper"
-import HeroDisplay from "../components/HerosLayer/HeroDisplay"
-import CustomPage500 from "./500"
 import { Loader } from "../components/Loader"
 import { Copyright } from "../components/Copyright"
 import { useStore } from "../store/store"
-import { motion } from "framer-motion"
-import { useRef } from "react"
 
 export default function Index() {
   const ref = useRef(null)
@@ -21,12 +27,12 @@ export default function Index() {
   }
 
   if (!data) {
-    console.log("Wait for loading!~")
     return <Loader />
   }
 
   init(data)
 
+  //Delete div from view to give access to the buttons
   setTimeout(() => (ref.current.style.display = "none"), 1000)
 
   return (
@@ -44,6 +50,7 @@ export default function Index() {
         }}
         initial={"hidden"}
         animate={"visible"}
+        exit={"deleted"}
         variants={{
           hidden: {
             opacity: 1,
@@ -59,7 +66,7 @@ export default function Index() {
       <Box>
         <MemulatedRandomPaper />
         <br />
-        <HeroDisplay />
+        <HeroDispayMemoized />
 
         <Copyright />
       </Box>

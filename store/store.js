@@ -39,11 +39,11 @@ export const randomHero = (filter) => {
   const roleWriter = () => {
     switch (heroCollector[rand].primary_attr) {
       case "int":
-        return "intelligence"
+        return "Intelligence"
       case "agi":
-        return "agility"
+        return "Agility"
       case "str":
-        return "strength"
+        return "Strength"
     }
   }
 

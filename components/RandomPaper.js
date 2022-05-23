@@ -1,12 +1,11 @@
 import { Box, Container, Paper } from "@mui/material"
 import { Text } from "./Text"
 import { ModalWindow } from "./Modal/Modal"
-import { memo, useCallback, useState } from "react"
+import React, { useCallback, useState } from "react"
 import { Button } from "./Button/Button"
-// import { randomTheHero, useStore } from "../store/store"
 import { useStore, randomHero } from "../store/store"
 
-const RandomPaper = () => {
+export default React.memo(function RandomPaper() {
   const [isOpen, stateOpen] = useState(false)
   const { heroes, randomed } = useStore()
 
@@ -50,6 +49,4 @@ const RandomPaper = () => {
       </Paper>
     </Container>
   )
-}
-
-export const MemulatedRandomPaper = memo(RandomPaper)
+})
