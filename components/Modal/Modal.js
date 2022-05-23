@@ -1,12 +1,11 @@
 import {
   Box,
-  Dialog,
   DialogContent,
   DialogTitle,
   FormControlLabel,
   Switch,
 } from "@mui/material"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import dynamic from "next/dynamic"
 const Modal = dynamic(() => import("@mantine/core").then((elem) => elem.Modal))
 const Select = dynamic(() =>
@@ -50,10 +49,6 @@ export const ModalWindow = ({ isOpen, toClose, data }) => {
     changeIsNeed(!isNeed)
   }
 
-  useEffect(() => {
-    console.log(selected)
-  }, [selected])
-
   const clickHandler = () => {
     const [{ attributes, roles, attackType }] = [selected]
 
@@ -74,12 +69,11 @@ export const ModalWindow = ({ isOpen, toClose, data }) => {
     randomHero(filteredHero)
   }
 
-  const onChangeMobile = (value, type, isMultiple) => {
+  const onChangeMobile = (value, type) => {
     setSelected({
       ...selected,
       [type]: value,
     })
-    console.log(selected)
   }
 
   return (

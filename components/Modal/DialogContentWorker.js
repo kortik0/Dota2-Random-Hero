@@ -17,7 +17,6 @@ export const DialogContentWorker = ({
   } = { ...data }
 
   const selectClickHandler = (value, attachedSection) => {
-    console.log(currentSelected, attachedSection, value)
     clickHandler({
       ...currentSelected,
       [attachedSection]: currentSelected[attachedSection].includes(value)

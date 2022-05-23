@@ -27,7 +27,6 @@ export default function Index() {
   }
 
   if (!data) {
-    console.log("Wait for loading!~")
     return <Loader />
   }
 
