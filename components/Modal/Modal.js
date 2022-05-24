@@ -8,12 +8,6 @@ import {
 import React, { useState } from "react"
 import dynamic from "next/dynamic"
 const Modal = dynamic(() => import("@mantine/core").then((elem) => elem.Modal))
-const Select = dynamic(() =>
-  import("@mantine/core").then((elem) => elem.Select)
-)
-const MultiSelect = dynamic(() =>
-  import("@mantine/core").then((elem) => elem.MultiSelect)
-)
 import { Button } from "../Button/Button"
 import { MyImage } from "../Image"
 import { DialogContentWorker } from "./DialogContentWorker"
@@ -32,13 +26,12 @@ export const ModalWindow = ({ isOpen, toClose, data }) => {
 
   //V0.5 - is needed
   const [isNeed, changeIsNeed] = useState(false)
+  const [isMobile, _] = useState(window.innerWidth <= 768)
   const [selected, setSelected] = useState({
     attributes: [],
     roles: [],
     attackType: [],
   })
-
-  const modalContent = ["Attributes", "Roles", "Attack type"]
 
   const changeHandler = () => {
     setSelected({
@@ -69,13 +62,6 @@ export const ModalWindow = ({ isOpen, toClose, data }) => {
     randomHero(filteredHero)
   }
 
-  const onChangeMobile = (value, type) => {
-    setSelected({
-      ...selected,
-      [type]: value,
-    })
-  }
-
   return (
     <>
       {isOpen && (
@@ -86,70 +72,16 @@ export const ModalWindow = ({ isOpen, toClose, data }) => {
               value="Allow you to select several options"
               control={<Switch color="primary" onChange={changeHandler} />}
               label="Allow you to select several options"
-              labelPlacement="end"
+              labelPlacement="top"
             />
           </Box>
           <DialogContent>
-            {window.innerWidth > 720 ? (
-              modalContent.map((content) => (
-                <DialogContentWorker
-                  key={content}
-                  clickHandler={setSelected}
-                  currentSelected={selected}
-                  currentContent={content}
-                  isNeed={isNeed}
-                />
-              ))
-            ) : isNeed === false ? (
-              <>
-                <Select
-                  label={"Attributes"}
-                  value={selected.attributes}
-                  onChange={(value) => onChangeMobile([value], "attributes")}
-                  data={initialShorthandAttributes}
-                />
-                <Select
-                  label={"Roles"}
-                  value={selected.roles}
-                  onChange={(value) => onChangeMobile([value], "roles")}
-                  data={initialRoles}
-                />
-                <Select
-                  label={"Attack Type"}
-                  value={selected.attackType}
-                  onChange={(value) => onChangeMobile([value], "attackType")}
-                  data={initialAttackTypes}
-                />
-              </>
-            ) : (
-              <>
-                <MultiSelect
-                  label={"Attributes"}
-                  value={selected.attributes}
-                  onChange={(value) =>
-                    onChangeMobile(value, "attributes", true)
-                  }
-                  data={initialShorthandAttributes}
-                  clearButtonLabel="Clear selection"
-                />
-                <MultiSelect
-                  label={"Roles"}
-                  value={selected.roles}
-                  onChange={(value) => onChangeMobile(value, "roles", true)}
-                  data={initialRoles}
-                  clearButtonLabel="Clear selection"
-                />
-                <MultiSelect
-                  label={"Attack Type"}
-                  value={selected.attackType}
-                  onChange={(value) =>
-                    onChangeMobile(value, "attackType", true)
-                  }
-                  data={initialAttackTypes}
-                  clearButtonLabel="Clear selection"
-                />
-              </>
-            )}
+            <DialogContentWorker
+              clickHandler={setSelected}
+              currentSelected={selected}
+              isNeed={isNeed}
+              isMobile={isMobile}
+            />
             <br />
             <div style={{ display: "flex" }}>
               <Button
