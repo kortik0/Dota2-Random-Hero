@@ -1,20 +1,19 @@
-import { DialogContentText } from "@mui/material"
 import { SelectButton } from "./SelectButton"
+import data from "./ModalData/advancedData.json"
+import { Group } from "@mantine/core"
+import dynamic from "next/dynamic"
+import React from "react"
+
 const Select = dynamic(() =>
   import("@mantine/core").then((elem) => elem.Select)
 )
 const MultiSelect = dynamic(() =>
   import("@mantine/core").then((elem) => elem.MultiSelect)
 )
-import data from "./ModalData/advancedData.json"
-import { Group } from "@mantine/core"
-import dynamic from "next/dynamic"
-import React from "react"
 
 export const DialogContentWorker = ({
   clickHandler,
   currentSelected,
-  currentContent,
   isNeed,
   isMobile,
 }) => {
@@ -54,7 +53,10 @@ export const DialogContentWorker = ({
   const onChangeMobile = (value, type) => {
     clickHandler({
       ...currentSelected,
-      [type]: value.map((string) => string.slice(0, 3).toLowerCase()),
+      [type]:
+        type === "attributes"
+          ? value.map((string) => string.slice(0, 3).toLowerCase())
+          : value,
     })
   }
 
@@ -62,14 +64,11 @@ export const DialogContentWorker = ({
 
   return (
     <>
-      <DialogContentText key={`${currentContent}_Modal_Content`}>
-        {currentContent}
-      </DialogContentText>
       {!isMobile ? (
-        modalContent.map((currentContent) => (
-          <>
+        modalContent.map((currentContent, index, array) => (
+          <div key={`${currentContent}_${index}_${array}`}>
             <h4 key={currentContent}>{currentContent}</h4>
-            <Group key={currentContent}>
+            <Group key={`${currentContent}_${index}`}>
               {currentContent === "Attributes" &&
                 initialAttributes.map((attribute, index) => (
                   <SelectButton
@@ -104,7 +103,7 @@ export const DialogContentWorker = ({
                   />
                 ))}
             </Group>
-          </>
+          </div>
         ))
       ) : isNeed === false ? (
         <>

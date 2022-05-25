@@ -1,24 +1,21 @@
-import {
-  Box,
-  DialogContent,
-  DialogTitle,
-  FormControlLabel,
-  Switch,
-} from "@mui/material"
+import { DialogContent } from "@mui/material"
 import React, { useState } from "react"
 import dynamic from "next/dynamic"
-const Modal = dynamic(() => import("@mantine/core").then((elem) => elem.Modal))
 import { Button } from "../Button/Button"
 import { MyImage } from "../Image"
 import { DialogContentWorker } from "./DialogContentWorker"
 import jsonData from "./ModalData/advancedData.json"
 import { Text } from "../Text"
 import { AnimatePresence, motion } from "framer-motion"
+const Modal = dynamic(() => import("@mantine/core").then((elem) => elem.Modal))
+const Switch = dynamic(() =>
+  import("@mantine/core").then((elem) => elem.Switch)
+)
 
 import { randomHero, useStore } from "../../store/store"
 
 export const ModalWindow = ({ isOpen, toClose, data }) => {
-  const { randomed } = useStore()
+  const { randomed, errorMessage } = useStore()
 
   const { initialAttackTypes, initialRoles, initialShorthandAttributes } = {
     ...jsonData,
@@ -65,16 +62,8 @@ export const ModalWindow = ({ isOpen, toClose, data }) => {
   return (
     <>
       {isOpen && (
-        <Modal opened={isOpen} onClose={toClose}>
-          <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
-            <DialogTitle>Advanced options</DialogTitle>
-            <FormControlLabel
-              value="Allow you to select several options"
-              control={<Switch color="primary" onChange={changeHandler} />}
-              label="Allow you to select several options"
-              labelPlacement="top"
-            />
-          </Box>
+        <Modal title={"Advanced options"} opened={isOpen} onClose={toClose}>
+          <Switch onChange={changeHandler} label="Select multiple options" />
           <DialogContent>
             <DialogContentWorker
               clickHandler={setSelected}
@@ -92,6 +81,7 @@ export const ModalWindow = ({ isOpen, toClose, data }) => {
               </Button>
             </div>
 
+            {Object.keys({ errorMessage }) ? <Text>{errorMessage}</Text> : null}
             {Object.keys(randomed).length ? (
               <>
                 <Text>

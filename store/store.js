@@ -10,6 +10,7 @@ export const useStore = create(
     strength: [],
     agility: [],
     intelligence: [],
+    errorMessage: "",
     randomed: {},
     initializeHero: (data) => {
       set({
@@ -34,7 +35,18 @@ export const randomHero = (filter) => {
 
   const heroCollector = filter || get.heroes
 
-  const { rand, caution } = getRandomNumber(heroCollector, get.randomed)
+  const { rand, caution, errorMessage } = getRandomNumber(
+    heroCollector,
+    get.randomed
+  )
+
+  if (errorMessage?.length) {
+    useStore.setState({
+      errorMessage,
+      randomed: {},
+    })
+    return
+  }
 
   const roleWriter = () => {
     switch (heroCollector[rand].primary_attr) {
@@ -52,6 +64,7 @@ export const randomHero = (filter) => {
   )[0]?.id
 
   useStore.setState({
+    errorMessage: "",
     randomed: {
       localized_name: heroCollector[rand].localized_name,
       name: heroCollector[rand].name,
