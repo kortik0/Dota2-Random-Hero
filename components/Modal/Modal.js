@@ -22,8 +22,8 @@ export const ModalWindow = ({ isOpen, toClose, data }) => {
   }
 
   //V0.5 - is needed
-  const [isNeed, changeIsNeed] = useState(false)
-  const [isMobile, _] = useState(window.innerWidth <= 768)
+  const [isNeed, changeIsNeed] = useState(false) //Is multiselect allowed
+  const [isMobile, _] = useState(window.innerWidth <= 768) //768 pixels I think that normal for newest smartphone
   const [selected, setSelected] = useState({
     attributes: [],
     roles: [],
