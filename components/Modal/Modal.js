@@ -7,12 +7,12 @@ import { DialogContentWorker } from "./DialogContentWorker"
 import jsonData from "./ModalData/advancedData.json"
 import { Text } from "../Text"
 import { AnimatePresence, motion } from "framer-motion"
+import { randomHero, useStore } from "../../store/store"
+import AnimatedHeroImage from "./AnimatedHeroImage"
 const Modal = dynamic(() => import("@mantine/core").then((elem) => elem.Modal))
 const Switch = dynamic(() =>
   import("@mantine/core").then((elem) => elem.Switch)
 )
-
-import { randomHero, useStore } from "../../store/store"
 
 export const ModalWindow = ({ isOpen, toClose, data }) => {
   const { randomed, errorMessage } = useStore()
@@ -81,49 +81,13 @@ export const ModalWindow = ({ isOpen, toClose, data }) => {
               </Button>
             </div>
 
-            {Object.keys({ errorMessage }) ? <Text>{errorMessage}</Text> : null}
+            {errorMessage.length ? <Text>{errorMessage}</Text> : null}
             {Object.keys(randomed).length ? (
               <>
                 <Text>
                   Your heroes for this time is: {randomed.localized_name}
                 </Text>
-                <AnimatePresence>
-                  <motion.div
-                    key={randomed.name}
-                    initial={"hiddenHero"}
-                    animate={"animatedHero"}
-                    exit={"leaveHero"}
-                    style={{ position: "relative" }}
-                    variants={{
-                      hiddenHero: {
-                        left: "-300px",
-                        display: "none",
-                      },
-                      animatedHero: {
-                        left: 0,
-                        display: "initial",
-                        transition: {
-                          duration: 0.7,
-                        },
-                      },
-                      leaveHero: {
-                        bottom: "-300px",
-                        transition: {
-                          duration: 0.2,
-                        },
-                      },
-                    }}
-                  >
-                    <MyImage hero={randomed} />
-                  </motion.div>
-                  {randomed.caution && (
-                    <Text>
-                      With these options, only 1 hero is possible to be
-                      randomized! If you want a more pool, select or turn off
-                      some options.
-                    </Text>
-                  )}
-                </AnimatePresence>
+                <AnimatedHeroImage randomed={randomed} />
               </>
             ) : null}
           </DialogContent>
