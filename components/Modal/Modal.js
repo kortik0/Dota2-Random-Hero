@@ -1,44 +1,32 @@
-import {
-  Box,
-  DialogContent,
-  DialogTitle,
-  FormControlLabel,
-  Switch,
-} from "@mui/material"
+import { DialogContent } from "@mui/material"
 import React, { useState } from "react"
 import dynamic from "next/dynamic"
-const Modal = dynamic(() => import("@mantine/core").then((elem) => elem.Modal))
-const Select = dynamic(() =>
-  import("@mantine/core").then((elem) => elem.Select)
-)
-const MultiSelect = dynamic(() =>
-  import("@mantine/core").then((elem) => elem.MultiSelect)
-)
 import { Button } from "../Button/Button"
-import { MyImage } from "../Image"
 import { DialogContentWorker } from "./DialogContentWorker"
 import jsonData from "./ModalData/advancedData.json"
 import { Text } from "../Text"
-import { AnimatePresence, motion } from "framer-motion"
-
 import { randomHero, useStore } from "../../store/store"
+import AnimatedHeroImage from "./AnimatedHeroImage"
+const Modal = dynamic(() => import("@mantine/core").then((elem) => elem.Modal))
+const Switch = dynamic(() =>
+  import("@mantine/core").then((elem) => elem.Switch)
+)
 
 export const ModalWindow = ({ isOpen, toClose, data }) => {
-  const { randomed } = useStore()
+  const { randomed, errorMessage } = useStore()
 
   const { initialAttackTypes, initialRoles, initialShorthandAttributes } = {
     ...jsonData,
   }
 
   //V0.5 - is needed
-  const [isNeed, changeIsNeed] = useState(false)
+  const [isNeed, changeIsNeed] = useState(false) //Is multiselect allowed
+  const [isMobile, _] = useState(window.innerWidth <= 768) //768 pixels I think that normal for newest smartphone
   const [selected, setSelected] = useState({
     attributes: [],
     roles: [],
     attackType: [],
   })
-
-  const modalContent = ["Attributes", "Roles", "Attack type"]
 
   const changeHandler = () => {
     setSelected({
@@ -69,87 +57,18 @@ export const ModalWindow = ({ isOpen, toClose, data }) => {
     randomHero(filteredHero)
   }
 
-  const onChangeMobile = (value, type) => {
-    setSelected({
-      ...selected,
-      [type]: value,
-    })
-  }
-
   return (
     <>
       {isOpen && (
-        <Modal opened={isOpen} onClose={toClose}>
-          <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
-            <DialogTitle>Advanced options</DialogTitle>
-            <FormControlLabel
-              value="Allow you to select several options"
-              control={<Switch color="primary" onChange={changeHandler} />}
-              label="Allow you to select several options"
-              labelPlacement="end"
-            />
-          </Box>
+        <Modal title={"Advanced options"} opened={isOpen} onClose={toClose}>
+          <Switch onChange={changeHandler} label="Select multiple options" />
           <DialogContent>
-            {window.innerWidth > 720 ? (
-              modalContent.map((content) => (
-                <DialogContentWorker
-                  key={content}
-                  clickHandler={setSelected}
-                  currentSelected={selected}
-                  currentContent={content}
-                  isNeed={isNeed}
-                />
-              ))
-            ) : isNeed === false ? (
-              <>
-                <Select
-                  label={"Attributes"}
-                  value={selected.attributes}
-                  onChange={(value) => onChangeMobile([value], "attributes")}
-                  data={initialShorthandAttributes}
-                />
-                <Select
-                  label={"Roles"}
-                  value={selected.roles}
-                  onChange={(value) => onChangeMobile([value], "roles")}
-                  data={initialRoles}
-                />
-                <Select
-                  label={"Attack Type"}
-                  value={selected.attackType}
-                  onChange={(value) => onChangeMobile([value], "attackType")}
-                  data={initialAttackTypes}
-                />
-              </>
-            ) : (
-              <>
-                <MultiSelect
-                  label={"Attributes"}
-                  value={selected.attributes}
-                  onChange={(value) =>
-                    onChangeMobile(value, "attributes", true)
-                  }
-                  data={initialShorthandAttributes}
-                  clearButtonLabel="Clear selection"
-                />
-                <MultiSelect
-                  label={"Roles"}
-                  value={selected.roles}
-                  onChange={(value) => onChangeMobile(value, "roles", true)}
-                  data={initialRoles}
-                  clearButtonLabel="Clear selection"
-                />
-                <MultiSelect
-                  label={"Attack Type"}
-                  value={selected.attackType}
-                  onChange={(value) =>
-                    onChangeMobile(value, "attackType", true)
-                  }
-                  data={initialAttackTypes}
-                  clearButtonLabel="Clear selection"
-                />
-              </>
-            )}
+            <DialogContentWorker
+              clickHandler={setSelected}
+              currentSelected={selected}
+              isNeed={isNeed}
+              isMobile={isMobile}
+            />
             <br />
             <div style={{ display: "flex" }}>
               <Button
@@ -160,48 +79,13 @@ export const ModalWindow = ({ isOpen, toClose, data }) => {
               </Button>
             </div>
 
+            {errorMessage.length ? <Text>{errorMessage}</Text> : null}
             {Object.keys(randomed).length ? (
               <>
                 <Text>
                   Your heroes for this time is: {randomed.localized_name}
                 </Text>
-                <AnimatePresence>
-                  <motion.div
-                    key={randomed.name}
-                    initial={"hiddenHero"}
-                    animate={"animatedHero"}
-                    exit={"leaveHero"}
-                    style={{ position: "relative" }}
-                    variants={{
-                      hiddenHero: {
-                        left: "-300px",
-                        display: "none",
-                      },
-                      animatedHero: {
-                        left: 0,
-                        display: "initial",
-                        transition: {
-                          duration: 0.7,
-                        },
-                      },
-                      leaveHero: {
-                        bottom: "-300px",
-                        transition: {
-                          duration: 0.2,
-                        },
-                      },
-                    }}
-                  >
-                    <MyImage hero={randomed} />
-                  </motion.div>
-                  {randomed.caution && (
-                    <Text>
-                      With these options, only 1 hero is possible to be
-                      randomized! If you want a more pool, select or turn off
-                      some options.
-                    </Text>
-                  )}
-                </AnimatePresence>
+                <AnimatedHeroImage randomed={randomed} />
               </>
             ) : null}
           </DialogContent>

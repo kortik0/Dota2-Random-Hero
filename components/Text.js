@@ -1,14 +1,16 @@
-import { Typography } from "@mui/material"
+import { Text as Typography } from "@mantine/core"
 
 export const Text = ({
   children,
-  variant = "body1",
+  variant = "md",
   color = "#457b9d",
   styles,
 }) => {
-  //Probably don't use variant >= h2
   return (
-    <Typography style={{ color: color, ...styles }} variant={variant}>
+    <Typography
+      style={{ color: color, fontFamily: "Nunito", ...styles }}
+      size={variant}
+    >
       {children}
     </Typography>
   )

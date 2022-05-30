@@ -1,74 +1,34 @@
-import { DialogContentText } from "@mui/material"
-import { SelectButton } from "./SelectButton"
-import data from "./ModalData/advancedData.json"
-import { Group } from "@mantine/core"
+import React from "react"
+import dynamic from "next/dynamic"
+const DialogButtonGroup = dynamic(() =>
+  import("./DialogComponents/DialogButtonGroup")
+)
+const SelectGroups = dynamic(() => import("./DialogComponents/SelectGroups"))
 
 export const DialogContentWorker = ({
   clickHandler,
   currentSelected,
-  currentContent,
   isNeed,
+  isMobile,
 }) => {
-  const {
-    initialAttributes,
-    initialAttackTypes,
-    initialRoles,
-    initialShorthandAttributes,
-  } = { ...data }
-
-  const selectClickHandler = (value, attachedSection) => {
-    clickHandler({
-      ...currentSelected,
-      [attachedSection]: currentSelected[attachedSection].includes(value)
-        ? currentSelected[attachedSection].filter(
-            (element) => element !== value
-          )
-        : isNeed
-        ? [...currentSelected[attachedSection], value]
-        : [value],
-    }) //rewrite or make something, idk
-  }
+  const modalContent = ["Attributes", "Roles", "Attack type"]
 
   return (
     <>
-      <DialogContentText key={`${currentContent}_Modal_Content`}>
-        {currentContent}
-      </DialogContentText>
-      <Group>
-        {currentContent === "Attributes" &&
-          initialAttributes.map((attribute, index) => (
-            <SelectButton
-              key={`${attribute}_${currentContent}_button`}
-              selectedData={currentSelected}
-              clickHandler={selectClickHandler}
-              data={attribute}
-              value={initialShorthandAttributes[index]}
-              attached={"attributes"}
-            />
-          ))}
-        {currentContent === "Roles" &&
-          initialRoles.map((role, index) => (
-            <SelectButton
-              key={`${role}_${currentContent}_button`}
-              selectedData={currentSelected}
-              clickHandler={selectClickHandler}
-              data={role}
-              value={initialRoles[index]}
-              attached={"roles"}
-            />
-          ))}
-        {currentContent === "Attack type" &&
-          initialAttackTypes.map((type, index) => (
-            <SelectButton
-              key={`${type}_${currentContent}_button`}
-              selectedData={currentSelected}
-              clickHandler={selectClickHandler}
-              data={type}
-              value={initialAttackTypes[index]}
-              attached={"attackType"}
-            />
-          ))}
-      </Group>
+      {!isMobile ? (
+        <DialogButtonGroup
+          modalContent={modalContent}
+          currentSelected={currentSelected}
+          clickHandler={clickHandler}
+          isNeed={isNeed}
+        />
+      ) : (
+        <SelectGroups
+          currentSelected={currentSelected}
+          isNeed={isNeed}
+          clickHandler={clickHandler}
+        />
+      )}
     </>
   )
 }

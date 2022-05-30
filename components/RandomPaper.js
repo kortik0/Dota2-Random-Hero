@@ -4,6 +4,7 @@ import { ModalWindow } from "./Modal/Modal"
 import React, { useCallback, useState } from "react"
 import { Button } from "./Button/Button"
 import { useStore, randomHero } from "../store/store"
+import Title from "./Title"
 
 export default React.memo(function RandomPaper() {
   const [isOpen, stateOpen] = useState(false)
@@ -18,21 +19,34 @@ export default React.memo(function RandomPaper() {
   }, [])
 
   return (
-    <Container style={{ marginTop: "20px" }}>
+    <Container style={{ marginTop: "2px" }}>
+      <Title
+        order={1}
+        styles={{
+          display: "flex",
+          justifyContent: "center",
+          fontSize: 24,
+        }}
+      >
+        RANDOM YOUR NEXT DOTA 2 HERO!
+      </Title>
       <Paper
         elevation={3}
         style={{
+          marginTop: "5px",
           padding: "10px",
         }}
       >
-        <Text
+        <Title
+          order={2}
           styles={{
             display: "flex",
             justifyContent: "center",
+            fontSize: 16,
           }}
         >
-          Select the buttons that will help you to find the character you want:
-        </Text>
+          Select the buttons that will help you to find the hero you want:
+        </Title>
         <Box style={{ display: "flex" }}>
           <Button action={clickHandler}>Random</Button>
           <Button action={dialogClickHandler}>Advanced options</Button>
