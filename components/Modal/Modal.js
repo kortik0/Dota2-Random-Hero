@@ -21,7 +21,13 @@ export const ModalWindow = ({ isOpen, toClose, data }) => {
 
   //V0.5 - is needed
   const [isNeed, changeIsNeed] = useState(false) //Is multiselect allowed
-  const [isMobile, _] = useState(window.innerWidth <= 768) //768 pixels I think that normal for newest smartphone
+  //TODO: rework it later
+  // const [isMobile, checkIsMobile] = useState(false)
+  // if (typeof window !== "undefined") {
+  //   // Client-side-only code
+  //   checkIsMobile((prevState) => window.innerWidth <= 768) //768 pixels I think that normal for newest smartphone
+  // }
+
   const [selected, setSelected] = useState({
     attributes: [],
     roles: [],
@@ -67,7 +73,8 @@ export const ModalWindow = ({ isOpen, toClose, data }) => {
               clickHandler={setSelected}
               currentSelected={selected}
               isNeed={isNeed}
-              isMobile={isMobile}
+              // isMobile={isMobile}
+              isMobile={false}
             />
             <br />
             <div style={{ display: "flex" }}>

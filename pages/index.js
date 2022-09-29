@@ -1,5 +1,8 @@
 // import { Header } from "../components/Header"
-import useSWR from "swr"
+// import useSWR from "swr"
+// import { Loader } from "../components/Loader"
+// const CustomPage500 = dynamic(() => import("./500"))
+
 import dynamic from "next/dynamic"
 import { motion } from "framer-motion"
 
@@ -9,34 +12,21 @@ const HeroDispayMemoized = dynamic(() =>
 
 const MemulatedRandomPaper = dynamic(() => import("../components/RandomPaper"))
 
-const CustomPage500 = dynamic(() => import("./500"))
-
-import { useRef } from "react" //Read about Suspense
+import { useRef } from "react"
 import { Box } from "@mui/material"
-import { Loader } from "../components/Loader"
 import { Copyright } from "../components/Copyright"
+
 import { useStore } from "../store/store"
+import { ImageContext } from "../context/ImageContext"
 
-export default function Index() {
+export default function Index({ data, images }) {
   const ref = useRef(null)
-  const { isLoading, isError, data } = GetHeroes()
   const init = useStore((state) => state.initializeHero)
-
-  if (isError) {
-    return <CustomPage500 />
-  }
-
-  if (!data) {
-    return <Loader />
-  }
 
   init(data)
 
-  //Delete div from view to give access to the buttons
-  setTimeout(() => (ref.current.style.display = "none"), 1000)
-
   return (
-    <>
+    <ImageContext.Provider value={images}>
       <motion.div
         ref={ref}
         style={{
@@ -56,6 +46,7 @@ export default function Index() {
             opacity: 1,
           },
           visible: {
+            display: "none",
             opacity: 0,
             transition: {
               duration: 1,
@@ -70,18 +61,26 @@ export default function Index() {
 
         <Copyright />
       </Box>
-    </>
+    </ImageContext.Provider>
   )
 }
 
-const GetHeroes = () => {
-  const fetcher = (...args) => fetch(...args).then((res) => res.json())
+export async function getStaticProps(context) {
+  const response = await fetch("https://api.opendota.com/api/heroes")
+  const data = await response.json()
+  const images = []
 
-  const { data, error } = useSWR("https://api.opendota.com/api/heroes", fetcher)
+  for (const hero of data) {
+    const image = `https://cdn.dota2.com/apps/dota2/images/heroes/${hero.name.slice(
+      14
+    )}_lg.png`
 
+    images.push({ name: hero.name, image })
+  }
   return {
-    data,
-    isError: error,
-    isLoading: !error && !data,
+    props: {
+      data,
+      images,
+    }, // will be passed to the page component as props
   }
 }
