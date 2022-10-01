@@ -14,7 +14,8 @@ export const MyImage = ({ hero }) => {
       width={110}
       height={70}
       quality={70}
-      loading={"lazy"}
+      // loading={"lazy"}
+      priority={true}
     />
   )
 }
