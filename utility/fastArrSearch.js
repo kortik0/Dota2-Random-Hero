@@ -15,8 +15,6 @@ export const interpolationSearch = (sortedArray, seekElement) => {
     const valueDelta =
       seekElement - Number(sortedArray[leftIndex].attributes[2].value)
 
-    console.log(rangeDelta, indexDelta, valueDelta)
-
     if (valueDelta < 0) {
       return -1
     }
