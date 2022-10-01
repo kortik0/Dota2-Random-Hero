@@ -9,18 +9,20 @@ export const interpolationSearch = (sortedArray, seekElement) => {
 
   while (leftIndex <= rightIndex) {
     const rangeDelta =
-      Number(sortedArray[rightIndex].attributes[1].value) -
-      Number(sortedArray[leftIndex].attributes[1].value)
+      Number(sortedArray[rightIndex].attributes[2].value) -
+      Number(sortedArray[leftIndex].attributes[2].value)
     const indexDelta = rightIndex - leftIndex
     const valueDelta =
-      seekElement - Number(sortedArray[leftIndex].attributes[1].value)
+      seekElement - Number(sortedArray[leftIndex].attributes[2].value)
+
+    console.log(rangeDelta, indexDelta, valueDelta)
 
     if (valueDelta < 0) {
       return -1
     }
 
     if (!rangeDelta) {
-      return Number(sortedArray[leftIndex].attributes[1].value) === seekElement
+      return Number(sortedArray[leftIndex].attributes[2].value) === seekElement
         ? leftIndex
         : -1
     }
@@ -28,11 +30,11 @@ export const interpolationSearch = (sortedArray, seekElement) => {
     const middleIndex =
       leftIndex + Math.floor((valueDelta * indexDelta) / rangeDelta)
 
-    if (Number(sortedArray[middleIndex].attributes[1].value) === seekElement) {
+    if (Number(sortedArray[middleIndex].attributes[2].value) === seekElement) {
       return sortedArray[middleIndex]
     }
 
-    if (Number(sortedArray[middleIndex].attributes[1].value) < seekElement) {
+    if (Number(sortedArray[middleIndex].attributes[2].value) < seekElement) {
       leftIndex = middleIndex + 1
     } else {
       rightIndex = middleIndex - 1

@@ -9,6 +9,8 @@ export function useHookWithRefCallback(hero) {
         ref.current?.classList?.remove("randomed")
       }
 
+      console.log(ref, hero)
+
       //I hate this. I will rewrite this. Promise.
       if (node) {
         node = node.children
